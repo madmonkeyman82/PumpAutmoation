@@ -27,9 +27,9 @@ namespace PumpAutomation
 
             if (tcp)
             {
-                modbusControlTCP = new ModbusTcpControl();
-                modbusControlTCP.ConnectTimeout = 1000;
-                modbusControlTCP.ResponseTimeout = 1000;
+               // modbusControlTCP = new ModbusTcpControl();
+               // modbusControlTCP.ConnectTimeout = 1000;
+               // modbusControlTCP.ResponseTimeout = 1000;
                 LoadModbusTcp();
                 SetupUpModbusModuleTcp();
             }          
@@ -192,11 +192,11 @@ namespace PumpAutomation
         public bool Connect()
         {
        
-                ModbusTcp.Result result;
+               
                 SingletonLogger.AddToLog("Connecting to PLC using " + _Protocol + " and Ethernet ", LogType.Info, LogModule.PLC);
                 try
                 {
-                    if ((result = modbusControlTCP.Connect(_sPlcIPAddress, _iPlcPort)) == ModbusTcp.Result.SUCCESS)
+                    if ((result = modbusControlTCP.Connect(_sPlcIPAddress, _iPlcPort)) == Modbus)
                     {
                         SingletonLogger.AddToLog("Connecting to PLC = " + result.ToString(), LogType.Info, LogModule.COM);
                         return true;

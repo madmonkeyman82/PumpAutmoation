@@ -77,6 +77,7 @@ namespace PumpAutomation
         // Communication Modules
         // public Modbus modbusrtu = new Modbus();
         private Modbus _modbusControl;
+        
 
 
         // Communication Modules
@@ -135,8 +136,8 @@ namespace PumpAutomation
                 {
 
                     ReadAllCoils();
-                    ReadAllVMemories();
-                    ReadPlcTime();
+                    //ReadAllVMemories();
+                    //ReadPlcTime();
                     Thread.Sleep(_iTheadUpdateSlowDelay);
                 }
             }
@@ -151,6 +152,7 @@ namespace PumpAutomation
             bool[] CoilsBuffer = new bool[Enum.GetNames(typeof(CPlcVariableDoMore)).Length];
             if (GetCoils(0, ref CoilsBuffer))
             {
+                /*
                 _PlcVariables._MBPump1Start = CoilsBuffer[0];
                 _PlcVariables._MBPump1On = CoilsBuffer[1];
                 _PlcVariables._Unused1 = CoilsBuffer[2];
@@ -163,6 +165,7 @@ namespace PumpAutomation
                 _PlcVariables._MBSimulationMode = CoilsBuffer[9];
                 _PlcVariables._MBWatchDog = CoilsBuffer[10];
                 _PlcVariables._MBIsAlive = CoilsBuffer[11];
+                 */
             }
         }
 
@@ -280,8 +283,8 @@ namespace PumpAutomation
                     }
                     catch (Exception e)
                     {
-                        SingletonLogger.AddToLog(e.ToString(), LogType.Error, LogModule.PLC);
-                        SingletonLogger.AddToLog(_modbusControl.GetLastErrorString(), LogType.Error, LogModule.COM);
+                        //SingletonLogger.AddToLog(e.ToString(), LogType.Error, LogModule.PLC);
+                       // SingletonLogger.AddToLog(_modbusControl.GetLastErrorString(), LogType.Error, LogModule.COM);
                         return false;
                     }          
             }
@@ -303,7 +306,7 @@ namespace PumpAutomation
                 catch (Exception e)
                 {
                     SingletonLogger.AddToLog(e.ToString(), LogType.Error, LogModule.PLC);
-                    SingletonLogger.AddToLog(_modbusControl.GetLastErrorString(), LogType.Error, LogModule.COM);
+                  //  SingletonLogger.AddToLog(_modbusControl.GetLastErrorString(), LogType.Error, LogModule.COM);
                     
                 }
             }
@@ -325,7 +328,8 @@ namespace PumpAutomation
             /// <returns></returns>
             public bool GetCoilStatus(ushort address)
             {
-                return _modbusControl.GetCoilStatus(address);
+               // return _modbusControl.GetCoilStatus(address);
+                return false;
             }
 
             /// <summary>
@@ -336,10 +340,12 @@ namespace PumpAutomation
             /// <returns></returns>
             public bool GetCoils(ushort address , ref bool[] Coils)
             {
+                /*
                 if (_modbusControl.GetCoils(address, ref Coils))
                 {
                     return true;
                 }
+                 */ 
                 return false;
             }
 
@@ -359,7 +365,7 @@ namespace PumpAutomation
                     
                     ushort addess = (PlcCovnertions.GetVariableAddresse(Vtype, false));
 
-                    VMemValue[0] = _modbusControl.ReadWordValue(addess);
+                   // VMemValue[0] = _modbusControl.ReadWordValue(addess);
 
                     return VMemValue[0];
             }
@@ -370,7 +376,7 @@ namespace PumpAutomation
          
                 ushort addess = (PlcCovnertions.GetVariableAddresse(Vtype));
 
-                VMemValue[0] = _modbusControl.ReadWordValue(addess);
+              //  VMemValue[0] = _modbusControl.ReadWordValue(addess);
 
                 return VMemValue[0];
             }
@@ -384,7 +390,7 @@ namespace PumpAutomation
             public bool ReadWordValueS(ushort address, ushort quantity , ref short[] Registers)
             {
 
-                bool _bStatus = _modbusControl.ReadWordValueS(address, quantity, ref Registers);
+                bool _bStatus = false;//_modbusControl.ReadWordValueS(address, quantity, ref Registers);
 
                 if (_bStatus)
                 {
@@ -439,7 +445,7 @@ namespace PumpAutomation
             {
                 bool _Status = false;
 
-                _Status = _modbusControl.WriteToCoil(address, NewCoilStatus);
+                _Status = false; //_modbusControl.WriteToCoil(address, NewCoilStatus);
                // _Status = modbusControlSerial.WriteSingleCoilFC5(1, address, NewCoilStatus);
 
                 if (_Status)
@@ -480,7 +486,7 @@ namespace PumpAutomation
             {
                 bool _Status = false;
 
-                _Status = _modbusControl.WriteToRegister(address, SetValue);
+              //  _Status = _modbusControl.WriteToRegister(address, SetValue);
 
 
                 if (_Status)

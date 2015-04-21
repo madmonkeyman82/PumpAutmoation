@@ -24,19 +24,18 @@ namespace PumpAutomation
 
         public Modbus()
         {
-
+            test();
         }
 
         ~Modbus()
         {
 
         }
-        
 
         // ------------------------------------------------------------------------
-        // Button connect
+        // Connect
         // ------------------------------------------------------------------------
-        public void btnConnect_Click(object sender, System.EventArgs e)
+        public bool Connect()
         {
             try
             {
@@ -45,24 +44,56 @@ namespace PumpAutomation
                 MBmaster.OnResponseData += new ModbusTCP.Master.ResponseData(MBmaster_OnResponseData);
                 MBmaster.OnException += new ModbusTCP.Master.ExceptionData(MBmaster_OnException);
                 // Show additional fields, enable watchdog
-                _IsConnected = MBmaster.connected;
-
+                return true;
             }
-            catch (SystemException error)
+            catch (SystemException ex)
             {
-                SingletonLogger.AddToLog("Error during connect From ModbusTCP : " + error.Message, LogType.Error, LogModule.COM);
+                SingletonLogger.AddToLog("Modbus connction error: " + ex.Message, LogType.Error, LogModule.COM);
             }
+            return false;
         }
 
         #endregion
 
 
+        #region Test
+        private void test()
+        {
+            if (Connect())
+            {
+                ReadCoils(1, 0, 1023);
+            }
+        }
+
+        #endregion  
+
         #region Modbus Read
+
+        // ------------------------------------------------------------------------
+        // Button read coils
+        // ------------------------------------------------------------------------
+        private void ReadCoils(int unit, int startaddr, int length)
+        {
+            ushort ID = Convert.ToUInt16(1);
+
+            byte UNIT = Convert.ToByte(unit);
+
+            ushort STRADDR = Convert.ToUInt16(startaddr);
+
+            ushort LENGTH = Convert.ToUInt16(length);
+
+            MBmaster.ReadCoils(ID, UNIT, STRADDR, LENGTH);
+        }
+
+
         // ------------------------------------------------------------------------
         // Read start address
         // ------------------------------------------------------------------------
+      /*
         private ushort ReadStartAdr()
         {
+
+            
             // Convert hex numbers into decimal
             if (txtStartAdress.Text.IndexOf("0x", 0, txtStartAdress.Text.Length) == 0)
             {
@@ -74,7 +105,9 @@ namespace PumpAutomation
             {
                 return Convert.ToUInt16(txtStartAdress.Text);
             }
+             
         }
+       * */
         #endregion
 
         #region OnResponse
@@ -151,7 +184,7 @@ namespace PumpAutomation
                 case Master.excExceptionNotConnected: exc += "Not connected!"; break;
             }
 
-            MessageBox.Show(exc, "Modbus slave exception");
+            SingletonLogger.AddToLog("Modbus slave exception", LogType.Error, LogModule.COM);
         }
 
         #endregion
