@@ -123,6 +123,8 @@ namespace PumpAutomation
             _tThreadUpdatePlcVariablesSlowCycle = null;
         }
 
+
+        //Data colecting fra plc thread
         public void ThreadUpdatePlcVars()
         {
             SingletonLogger.AddToLog("Plc Vars Update Thread has Started", LogType.Info, LogModule.CORE);
