@@ -187,3 +187,6 @@ FakesAssemblies/
 GeneratedArtifacts/
 _Pvt_Extensions/
 ModelManifest.xml
+/PumpAutomation/Core/Modbus (1).cs
+/PumpAutomation/Core/Core (1).cs
+/PumpAutomation/PumpAutomation (1).csproj
