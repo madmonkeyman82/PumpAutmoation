@@ -61,7 +61,9 @@ namespace PumpAutomation
         {
             if (Connect())
             {
-                ReadCoils(1, 0, 1023);
+               // ReadCoils(1, 0, 1023);
+                ReadHoldReg(1, 90, 128);
+                
             }
         }
 
@@ -70,11 +72,11 @@ namespace PumpAutomation
         #region Modbus Read
 
         // ------------------------------------------------------------------------
-        // Button read coils
+        // Read coils
         // ------------------------------------------------------------------------
         private void ReadCoils(int unit, int startaddr, int length)
         {
-            ushort ID = Convert.ToUInt16(1);
+            ushort ID = 1;
 
             byte UNIT = Convert.ToByte(unit);
 
@@ -85,6 +87,18 @@ namespace PumpAutomation
             MBmaster.ReadCoils(ID, UNIT, STRADDR, LENGTH);
         }
 
+        // ------------------------------------------------------------------------
+        // Read holding register
+        // ------------------------------------------------------------------------
+        private void ReadHoldReg(int unit, int startaddr, int length)
+        {
+            ushort ID = 3;
+            byte UNIT = Convert.ToByte(unit);
+            ushort STRADDR = Convert.ToUInt16(startaddr);
+            ushort LENGTH = Convert.ToUInt16(length);
+
+            MBmaster.ReadHoldingRegister(ID, UNIT, STRADDR, LENGTH);
+        }
 
         // ------------------------------------------------------------------------
         // Read start address
@@ -141,8 +155,8 @@ namespace PumpAutomation
                    
                     break;
                 case 3:
-                   // grpData.Text = "Read holding register";
-                    //data = values;
+                    SingletonLogger.AddToLog("Read holding register", LogType.Info, LogModule.COM);
+                     _RegisterData = values;
                     
                     break;
                 case 4:
@@ -233,12 +247,27 @@ namespace PumpAutomation
         }
 
 
+        // ------------------------------------------------------------------------
+        // Data object with all plc coil`s
+        // ------------------------------------------------------------------------
         private byte[] _CoilsData = new byte[128]; // 1024 bits in MC0-1023
         public byte[] CoilsData
         {
             get 
             {
                 return _CoilsData;
+            }
+        }
+
+        // ------------------------------------------------------------------------
+        // Data object with all plc coil`s
+        // ------------------------------------------------------------------------
+        private byte[] _RegisterData = new byte[4096]; // 2048 word signed 16-bit in MHR0-2048
+        public byte[] RegisterData
+        {
+            get
+            {
+                return _RegisterData;
             }
         }
 
