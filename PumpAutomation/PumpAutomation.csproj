@@ -1,0 +1,219 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{DB496172-9C0F-4CB4-A88F-EF9D146B988E}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>PumpAutomation</RootNamespace>
+    <AssemblyName>PumpAutomation</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.ReportViewer.Common, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91" />
+    <Reference Include="Microsoft.ReportViewer.WinForms, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91" />
+    <Reference Include="NextUI">
+      <HintPath>..\..\NextwavesoftDotNetGauge\vs2008\NextUI\bin\Release\NextUI.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AboutBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AboutBox.Designer.cs">
+      <DependentUpon>AboutBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Core\Modbus-.cs" />
+    <Compile Include="Core\Modbus.cs" />
+    <Compile Include="Costumer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Costumer.Designer.cs">
+      <DependentUpon>Costumer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Database\Database.cs" />
+    <Compile Include="Database\DatabaseEnum.cs" />
+    <Compile Include="Gauges\GaugeArgs.cs" />
+    <Compile Include="Gauges\Gauges.cs" />
+    <Compile Include="LogDataSet.cs">
+      <DependentUpon>LogDataSet.xsd</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="LogDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LogDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Logger\LoggerEnum.cs" />
+    <Compile Include="PLC\VVariables.cs" />
+    <Compile Include="PLC\CVariables.cs" />
+    <Compile Include="PLC\MemoryType.cs" />
+    <Compile Include="Logger\Logger.cs" />
+    <Compile Include="Main.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main.Designer.cs">
+      <DependentUpon>Main.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ModbusOld.cs" />
+    <Compile Include="Core\Core.cs" />
+    <Compile Include="LoggViewer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LoggViewer.Designer.cs">
+      <DependentUpon>LoggViewer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PLC\PlcCovnertions.cs" />
+    <Compile Include="PLC\PlcVariables.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Options.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Options.Designer.cs">
+      <DependentUpon>Options.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Rapport.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Rapport.Designer.cs">
+      <DependentUpon>Rapport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RapportSelect.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RapportSelect.Designer.cs">
+      <DependentUpon>RapportSelect.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Settings.cs" />
+    <Compile Include="SignalViewer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SignalViewer.Designer.cs">
+      <DependentUpon>SignalViewer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="OptionsUnLock.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="OptionsUnLock.Designer.cs">
+      <DependentUpon>OptionsUnLock.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Utilities.cs" />
+    <EmbeddedResource Include="AboutBox.resx">
+      <DependentUpon>AboutBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Costumer.resx">
+      <DependentUpon>Costumer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Main.resx">
+      <DependentUpon>Main.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LoggViewer.resx">
+      <DependentUpon>LoggViewer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Options.resx">
+      <DependentUpon>Options.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Rapport.resx">
+      <DependentUpon>Rapport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RapportSelect.resx">
+      <DependentUpon>RapportSelect.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report1.rdlc" />
+    <EmbeddedResource Include="SignalViewer.resx">
+      <DependentUpon>SignalViewer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OptionsUnLock.resx">
+      <DependentUpon>OptionsUnLock.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="LogDataSet.xsc">
+      <DependentUpon>LogDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="LogDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>LogDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="LogDataSet.xss">
+      <DependentUpon>LogDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Log.mdb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Logger\TODO.txt" />
+    <Content Include="logo.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ModbusTCP\ModbusTCP.csproj">
+      <Project>{78a23b5b-cb72-4edb-b594-5370d086197d}</Project>
+      <Name>ModbusTCP</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

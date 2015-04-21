@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PumpControll", "PumpControll\PumpControll.csproj", "{835AD08C-2BED-40E1-AB2E-09A9EB3FB870}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PumpAutomation", "PumpAutomation\PumpAutomation.csproj", "{DB496172-9C0F-4CB4-A88F-EF9D146B988E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModbusTCP", "ModbusTCP\ModbusTCP.csproj", "{78A23B5B-CB72-4EDB-B594-5370D086197D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{835AD08C-2BED-40E1-AB2E-09A9EB3FB870}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{835AD08C-2BED-40E1-AB2E-09A9EB3FB870}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{835AD08C-2BED-40E1-AB2E-09A9EB3FB870}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{835AD08C-2BED-40E1-AB2E-09A9EB3FB870}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DB496172-9C0F-4CB4-A88F-EF9D146B988E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DB496172-9C0F-4CB4-A88F-EF9D146B988E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DB496172-9C0F-4CB4-A88F-EF9D146B988E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DB496172-9C0F-4CB4-A88F-EF9D146B988E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{78A23B5B-CB72-4EDB-B594-5370D086197D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78A23B5B-CB72-4EDB-B594-5370D086197D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78A23B5B-CB72-4EDB-B594-5370D086197D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78A23B5B-CB72-4EDB-B594-5370D086197D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
