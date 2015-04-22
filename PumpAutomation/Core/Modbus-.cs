@@ -62,7 +62,7 @@ namespace PumpAutomation
             if (Connect())
             {
                // ReadCoils(1, 0, 1023);
-                ReadHoldReg(1, 90, 128);
+                ReadHoldReg(0, 99, 100);
                 
             }
         }
@@ -146,7 +146,8 @@ namespace PumpAutomation
             {
                 case 1:
                     SingletonLogger.AddToLog("Read coils", LogType.Info, LogModule.COM);
-                   _CoilsData = values;
+                   
+                    _CoilsData = values;
                     
                     break;
                 case 2:
@@ -156,7 +157,12 @@ namespace PumpAutomation
                     break;
                 case 3:
                     SingletonLogger.AddToLog("Read holding register", LogType.Info, LogModule.COM);
-                     _RegisterData = values;
+
+                    //short[] sdata = new short[(int)Math.Ceiling(Convert.ToDouble(values.Length / 2))];
+                    
+                    Buffer.BlockCopy(values, 0, _RegisterData, 99, values.Length);
+
+                    // _RegisterData = values;
                     
                     break;
                 case 4:
@@ -262,8 +268,8 @@ namespace PumpAutomation
         // ------------------------------------------------------------------------
         // Data object with all plc coil`s
         // ------------------------------------------------------------------------
-        private byte[] _RegisterData = new byte[4096]; // 2048 word signed 16-bit in MHR0-2048
-        public byte[] RegisterData
+        private short[] _RegisterData = new short[2048]; // 2048 word signed 16-bit in MHR0-2048
+        public short[] RegisterData
         {
             get
             {
