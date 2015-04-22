@@ -14,60 +14,157 @@ namespace PumpAutomation
     class Modbus
     {
 
+        #region Constructor / Deconstructor
+
+        public Modbus()
+        {
+            StartUpdateModbus();
+        }
+
+        ~Modbus()
+        {
+            _IsClosing = true;
+            _tThreadUpdateModbus.Abort();
+            MBmaster.disconnect();
+            if (MBmaster != null)
+            {
+                MBmaster.Dispose();
+                MBmaster = null;
+            }	
+        }
+
+
+
+        #endregion
+
+        #region Private Vaibles
+
+        //Modbus Commnunication class
         private ModbusTCP.Master MBmaster;
 
 
         // Logger Variable
         private Logger SingletonLogger = Logger.Instance;
 
+        // Thread`s
+        private Thread _tThreadUpdateModbus;
+
+        //bool`s
+        private bool _IsClosing = false;
+
+        #endregion
+
+        #region Thread
+
+        private void StartUpdateModbus()
+        {
+            _tThreadUpdateModbus = new Thread(new ThreadStart(this.ThreadUpdateModbus));
+            _tThreadUpdateModbus.IsBackground = true;
+            _tThreadUpdateModbus.Name = "MODBUS UPDATE THREAD";
+            _tThreadUpdateModbus.Start();
+
+            Connect();
+        }
+
+        private void ThreadUpdateModbus()
+        {
+            while (!_IsClosing) 
+            {
+                int PrefCounter = 0;
+
+                while (_IsConnected)
+                {
+                    int MsNow = DateTime.Now.Millisecond;
+
+                    if (MBmaster.connected)
+                    {
+                        ReadCoils(1, 0, 1023);
+                        ReadHoldRegister();
+                    }
+                    else
+                    {
+                        _IsConnected = false;
+                    }
+
+                    _PreformanceTimeMs[PrefCounter] = (DateTime.Now.Millisecond - MsNow);
+
+                    // ?: conditional operator.
+                    //classify = (input > 0) ? "positive" : "negative";
+
+                    if (PrefCounter >= 4)
+                    { PrefCounter = 0; }
+                    else
+                    { PrefCounter++; }
+                    
+
+                } // end while _IsConnected
+                Thread.Sleep(5);
+            } // end while _IsClosing
+        }
+
+        #endregion  
+
+        
         #region Modbus General
-
-        public Modbus()
-        {
-            test();
-        }
-
-        ~Modbus()
-        {
-
-        }
 
         // ------------------------------------------------------------------------
         // Connect
         // ------------------------------------------------------------------------
         public bool Connect()
         {
-            try
+            if (!_IsConnected)
             {
-                // Create new modbus master and add event functions
-                MBmaster = new Master(_MoudbusIPAddress, _MoudbusPort);
-                MBmaster.OnResponseData += new ModbusTCP.Master.ResponseData(MBmaster_OnResponseData);
-                MBmaster.OnException += new ModbusTCP.Master.ExceptionData(MBmaster_OnException);
-                // Show additional fields, enable watchdog
+                try
+                {
+                    // Create new modbus master and add event functions
+                    MBmaster = new Master(_MoudbusIPAddress, _MoudbusPort);
+                    MBmaster.OnResponseData += new ModbusTCP.Master.ResponseData(MBmaster_OnResponseData);
+                    MBmaster.OnException += new ModbusTCP.Master.ExceptionData(MBmaster_OnException);
+                    // Show additional fields, enable watchdog
+                    _IsConnected = true;
+                    return true;
+                }
+                catch (SystemException ex)
+                {
+                    SingletonLogger.AddToLog("Modbus connction error: " + ex.Message, LogType.Error, LogModule.COM);
+                }
+                return false;
+            }
+            else
+            {
                 return true;
             }
-            catch (SystemException ex)
+        }
+
+        // ------------------------------------------------------------------------
+        // DisConnect
+        // ------------------------------------------------------------------------
+        public bool DisConnect()
+        {
+            if (MBmaster.connected)
             {
-                SingletonLogger.AddToLog("Modbus connction error: " + ex.Message, LogType.Error, LogModule.COM);
+                try
+                {
+                    MBmaster.OnException -= MBmaster_OnException;
+                    MBmaster.OnResponseData -= MBmaster_OnResponseData;
+                    MBmaster.disconnect();
+
+                    _IsConnected = false;
+                    return true;
+                }
+                catch (SystemException ex)
+                {
+                    SingletonLogger.AddToLog("Modbus connction error: " + ex.Message, LogType.Error, LogModule.COM);
+                }
+                return false;
             }
-            return false;
+            else
+            {
+                return true;
+            }
         }
 
         #endregion
-
-
-        #region Test
-        private void test()
-        {
-            if (Connect())
-            {
-               // ReadCoils(1, 0, 1023);
-                ReadHoldReg(0, 99, 100);
-                
-            }
-        }
-
-        #endregion  
 
         #region Modbus Read
 
@@ -87,17 +184,46 @@ namespace PumpAutomation
             MBmaster.ReadCoils(ID, UNIT, STRADDR, LENGTH);
         }
 
+
+
         // ------------------------------------------------------------------------
         // Read holding register
         // ------------------------------------------------------------------------
-        private void ReadHoldReg(int unit, int startaddr, int length)
+        private void ReadHoldRegister()
         {
             ushort ID = 3;
-            byte UNIT = Convert.ToByte(unit);
-            ushort STRADDR = Convert.ToUInt16(startaddr);
-            ushort LENGTH = Convert.ToUInt16(length);
+            byte UNIT = 0;
+            
+            //-------
+            //Read all Holding Registers in sequence and block copy in to int16 register
+            //0 - 99 
+            //100 - 199
+            //200 - 299
+            //300 - 300
 
-            MBmaster.ReadHoldingRegister(ID, UNIT, STRADDR, LENGTH);
+            //Check preformance timestamp
+            DateTime timeStart = DateTime.Now;
+
+            byte[] byteTemp = new byte[99];
+            
+            //0 - 99
+            MBmaster.ReadHoldingRegister(ID, UNIT, (ushort)0, (ushort)99, ref byteTemp);
+            Buffer.BlockCopy(byteTemp, 0, _RegisterData, 0, byteTemp.Length);
+
+            //100 - 199
+            MBmaster.ReadHoldingRegister(ID, UNIT, (ushort)100, (ushort)99, ref byteTemp);
+            Buffer.BlockCopy(byteTemp, 0, _RegisterData, 199, byteTemp.Length);
+
+            //200 - 299
+            MBmaster.ReadHoldingRegister(ID, UNIT, (ushort)200, (ushort)99, ref byteTemp);
+            Buffer.BlockCopy(byteTemp, 0, _RegisterData, 399, byteTemp.Length);
+
+            //300 - 399
+            MBmaster.ReadHoldingRegister(ID, UNIT, (ushort)300, (ushort)99, ref byteTemp);
+            Buffer.BlockCopy(byteTemp, 0, _RegisterData, 598, byteTemp.Length);
+
+            //Check preformnace end
+            TimeSpan performanceTime = (DateTime.Now - timeStart);
         }
 
         // ------------------------------------------------------------------------
@@ -160,7 +286,7 @@ namespace PumpAutomation
 
                     //short[] sdata = new short[(int)Math.Ceiling(Convert.ToDouble(values.Length / 2))];
                     
-                    Buffer.BlockCopy(values, 0, _RegisterData, 99, values.Length);
+                    Buffer.BlockCopy(values, 0, _RegisterData, 199, values.Length);
 
                     // _RegisterData = values;
                     
@@ -211,6 +337,9 @@ namespace PumpAutomation
 
         #region Get / Set
 
+        // ------------------------------------------------------------------------
+        // Modbus TCP Connection Ip address
+        // ------------------------------------------------------------------------
         private string _MoudbusIPAddress = "192.168.1.23";
         public string MoudbusIPAddress
         {
@@ -226,6 +355,10 @@ namespace PumpAutomation
 
         }
 
+
+        // ------------------------------------------------------------------------
+        // Modbus TCP Connection port
+        // ------------------------------------------------------------------------
         private ushort _MoudbusPort = 502;
         public ushort MoudbusPort
         {
@@ -241,6 +374,9 @@ namespace PumpAutomation
 
         }
 
+        // ------------------------------------------------------------------------
+        // Modbus TCP Connection status
+        // ------------------------------------------------------------------------
         private bool _IsConnected;
         public bool IsConnected
         {
@@ -250,6 +386,18 @@ namespace PumpAutomation
                 return _IsConnected;
             }
 
+        }
+
+        // ------------------------------------------------------------------------
+        // Preformence info update thread Returns ms time 
+        // ------------------------------------------------------------------------
+        private int[] _PreformanceTimeMs = new int[4];
+        public int PreformanceTimeMs
+        {
+            get
+            {
+                return (_PreformanceTimeMs.Sum()/5);
+            }
         }
 
 
@@ -268,8 +416,8 @@ namespace PumpAutomation
         // ------------------------------------------------------------------------
         // Data object with all plc coil`s
         // ------------------------------------------------------------------------
-        private short[] _RegisterData = new short[2048]; // 2048 word signed 16-bit in MHR0-2048
-        public short[] RegisterData
+        private Int16[] _RegisterData = new Int16[2048]; // 2048 word signed 16-bit in MHR0-2048
+        public Int16[] RegisterData
         {
             get
             {
