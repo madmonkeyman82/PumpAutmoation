@@ -135,7 +135,7 @@ namespace PumpAutomation
                 while (_bIsPlcConnected)
                 {
 
-                    //ReadAllCoils();
+                    ReadAllCoils();
                     //ReadAllVMemories();
                     //ReadPlcTime();
                     test();
@@ -150,10 +150,10 @@ namespace PumpAutomation
         /// </summary>
         private void ReadAllCoils()
         {
-            bool[] CoilsBuffer = new bool[Enum.GetNames(typeof(CPlcVariableDoMore)).Length];
-            if (GetCoils(0, ref CoilsBuffer))
-            {
-                /*
+            //bool[] CoilsBuffer = new bool[Enum.GetNames(typeof(CPlcVariableDoMore)).Length];
+            //if (GetCoils(0, ref CoilsBuffer))
+           // {
+                _PlcVariables._MBPump1Start = _modbusControl.CoilsData[(int)CPlcVariableDoMore.MBPump1Start];             /*
                 _PlcVariables._MBPump1Start = CoilsBuffer[0];
                 _PlcVariables._MBPump1On = CoilsBuffer[1];
                 _PlcVariables._Unused1 = CoilsBuffer[2];
@@ -167,7 +167,7 @@ namespace PumpAutomation
                 _PlcVariables._MBWatchDog = CoilsBuffer[10];
                 _PlcVariables._MBIsAlive = CoilsBuffer[11];
                  */
-            }
+           // }
         }
 
         private void ReadAllVMemories()
@@ -215,26 +215,7 @@ namespace PumpAutomation
         {
             LoadVariables();
 
-            //_modbusControl = new ModbusModule(_bModbusTCPMode);
-
             _modbusControl = new Modbus();
-
-            /*
-            if (_bModbusTCPMode)
-            {
-                modbusControlTCP = new ModbusTcpControl();
-                LoadModbusTcp();
-                SetupUpModbusModuleTcp();
-            }
-            else
-            {
-                modbusControlSerial = new ModbusControl();
-                LoadModbusSerial();
-                SetupUpModbusModuleSerial();
-            }
-            */
-
-           
             
             LoadPLCVariables();
         }
@@ -243,12 +224,7 @@ namespace PumpAutomation
         {
             _iTheadUpdateFastDelay = Properties.Settings.Default.PlcUpdatetimeFastCylce;
             _iTheadUpdateSlowDelay = Properties.Settings.Default.PlcUpdatetimeSlowCylce;
-            _bModbusTCPMode = Properties.Settings.Default.ComMode;
         }
-
-
-
-
 
 
         private void LoadPLCVariables()
@@ -285,7 +261,7 @@ namespace PumpAutomation
                     catch (Exception e)
                     {
                         //SingletonLogger.AddToLog(e.ToString(), LogType.Error, LogModule.PLC);
-                       // SingletonLogger.AddToLog(_modbusControl.GetLastErrorString(), LogType.Error, LogModule.COM);
+
                         return false;
                     }          
             }
@@ -295,27 +271,25 @@ namespace PumpAutomation
                 try
                 {
                         SingletonLogger.AddToLog("Disconnecting from PLC", LogType.Info, LogModule.PLC);
-                
                         _bStopUpdatePlcThread = true;
                         _bIsPlcConnected = false;
                         SingletonLogger.AddToLog("Disconnecting from PLC = ", LogType.Info, LogModule.COM);
                         Thread.Sleep(10);
                         StopUpdatePlcVarsThread();
                         Thread.Sleep(10);
+                        _modbusControl.Disconnect();
                         
                 }
                 catch (Exception e)
                 {
-                    SingletonLogger.AddToLog(e.ToString(), LogType.Error, LogModule.PLC);
-                  //  SingletonLogger.AddToLog(_modbusControl.GetLastErrorString(), LogType.Error, LogModule.COM);
-                    
+                    SingletonLogger.AddToLog(e.ToString(), LogType.Error, LogModule.PLC);       
                 }
             }
 
             public void test()
             {
               //  _modbusControl.test(); 
-                int PrefSpeed = _modbusControl.PreformanceTimeMs;
+                //int PrefSpeed = _modbusControl.PreformanceTimeMs;
             }
 
             #region PLC Read
@@ -516,6 +490,8 @@ namespace PumpAutomation
         public string Status { get { return _Status; } }
 
         public int ModbusPreformance { get { return _modbusControl.PreformanceTimeMs; } }
+
+        public bool[] ModbusCoilArray { get { return _modbusControl.CoilsData; } }
 
         public bool IsPlcConnected 
         {

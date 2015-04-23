@@ -33,11 +33,23 @@
             this.txt_pls_partical_ma = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.txt_MbSpeed = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
+            this.tabC_SigViewer = new System.Windows.Forms.TabControl();
+            this.tabPContSens = new System.Windows.Forms.TabPage();
+            this.tabPCore = new System.Windows.Forms.TabPage();
+            this.tabP_Coils = new System.Windows.Forms.TabPage();
+            this.dataGridViewCoils = new System.Windows.Forms.DataGridView();
+            this.Column_Coil = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column_Coil_status = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox6.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            this.tabC_SigViewer.SuspendLayout();
+            this.tabPContSens.SuspendLayout();
+            this.tabPCore.SuspendLayout();
+            this.tabP_Coils.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewCoils)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox6
@@ -70,6 +82,11 @@
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.TabStop = false;
             // 
+            // label3
+            // 
+            resources.ApplyResources(this.label3, "label3");
+            this.label3.Name = "label3";
+            // 
             // txt_MbSpeed
             // 
             resources.ApplyResources(this.txt_MbSpeed, "txt_MbSpeed");
@@ -81,18 +98,66 @@
             resources.ApplyResources(this.label2, "label2");
             this.label2.Name = "label2";
             // 
-            // label3
+            // tabC_SigViewer
             // 
-            resources.ApplyResources(this.label3, "label3");
-            this.label3.Name = "label3";
+            this.tabC_SigViewer.Controls.Add(this.tabPContSens);
+            this.tabC_SigViewer.Controls.Add(this.tabPCore);
+            this.tabC_SigViewer.Controls.Add(this.tabP_Coils);
+            resources.ApplyResources(this.tabC_SigViewer, "tabC_SigViewer");
+            this.tabC_SigViewer.Name = "tabC_SigViewer";
+            this.tabC_SigViewer.SelectedIndex = 0;
+            // 
+            // tabPContSens
+            // 
+            this.tabPContSens.BackColor = System.Drawing.SystemColors.ActiveBorder;
+            this.tabPContSens.Controls.Add(this.groupBox6);
+            resources.ApplyResources(this.tabPContSens, "tabPContSens");
+            this.tabPContSens.Name = "tabPContSens";
+            // 
+            // tabPCore
+            // 
+            this.tabPCore.BackColor = System.Drawing.SystemColors.ActiveBorder;
+            this.tabPCore.Controls.Add(this.groupBox1);
+            resources.ApplyResources(this.tabPCore, "tabPCore");
+            this.tabPCore.Name = "tabPCore";
+            // 
+            // tabP_Coils
+            // 
+            this.tabP_Coils.BackColor = System.Drawing.SystemColors.ActiveBorder;
+            this.tabP_Coils.Controls.Add(this.dataGridViewCoils);
+            resources.ApplyResources(this.tabP_Coils, "tabP_Coils");
+            this.tabP_Coils.Name = "tabP_Coils";
+            // 
+            // dataGridViewCoils
+            // 
+            this.dataGridViewCoils.AllowUserToAddRows = false;
+            this.dataGridViewCoils.AllowUserToDeleteRows = false;
+            this.dataGridViewCoils.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewCoils.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Column_Coil,
+            this.Column_Coil_status});
+            resources.ApplyResources(this.dataGridViewCoils, "dataGridViewCoils");
+            this.dataGridViewCoils.Name = "dataGridViewCoils";
+            this.dataGridViewCoils.ReadOnly = true;
+            // 
+            // Column_Coil
+            // 
+            resources.ApplyResources(this.Column_Coil, "Column_Coil");
+            this.Column_Coil.Name = "Column_Coil";
+            this.Column_Coil.ReadOnly = true;
+            // 
+            // Column_Coil_status
+            // 
+            resources.ApplyResources(this.Column_Coil_status, "Column_Coil_status");
+            this.Column_Coil_status.Name = "Column_Coil_status";
+            this.Column_Coil_status.ReadOnly = true;
             // 
             // SignalViewer
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveBorder;
-            this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.groupBox6);
+            this.Controls.Add(this.tabC_SigViewer);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -105,6 +170,11 @@
             this.groupBox6.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.tabC_SigViewer.ResumeLayout(false);
+            this.tabPContSens.ResumeLayout(false);
+            this.tabPCore.ResumeLayout(false);
+            this.tabP_Coils.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewCoils)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -118,5 +188,12 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox txt_MbSpeed;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TabControl tabC_SigViewer;
+        private System.Windows.Forms.TabPage tabPContSens;
+        private System.Windows.Forms.TabPage tabPCore;
+        private System.Windows.Forms.TabPage tabP_Coils;
+        private System.Windows.Forms.DataGridView dataGridViewCoils;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column_Coil;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column_Coil_status;
     }
 }

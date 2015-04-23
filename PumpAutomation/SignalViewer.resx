@@ -175,7 +175,7 @@
     <value>1</value>
   </data>
   <data name="groupBox6.Location" type="System.Drawing.Point, System.Drawing">
-    <value>9, 10</value>
+    <value>5, 5</value>
   </data>
   <data name="groupBox6.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 2, 2, 2</value>
@@ -199,10 +199,10 @@
     <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;groupBox6.Parent" xml:space="preserve">
-    <value>$this</value>
+    <value>tabPContSens</value>
   </data>
   <data name="&gt;&gt;groupBox6.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>0</value>
   </data>
   <data name="label3.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -295,7 +295,7 @@
     <value>2</value>
   </data>
   <data name="groupBox1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>240, 11</value>
+    <value>5, 5</value>
   </data>
   <data name="groupBox1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 2, 2, 2</value>
@@ -319,9 +319,150 @@
     <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;groupBox1.Parent" xml:space="preserve">
-    <value>$this</value>
+    <value>tabPCore</value>
   </data>
   <data name="&gt;&gt;groupBox1.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="tabPContSens.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 22</value>
+  </data>
+  <data name="tabPContSens.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 3</value>
+  </data>
+  <data name="tabPContSens.Size" type="System.Drawing.Size, System.Drawing">
+    <value>761, 530</value>
+  </data>
+  <data name="tabPContSens.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="tabPContSens.Text" xml:space="preserve">
+    <value>Contamination Sensor</value>
+  </data>
+  <data name="&gt;&gt;tabPContSens.Name" xml:space="preserve">
+    <value>tabPContSens</value>
+  </data>
+  <data name="&gt;&gt;tabPContSens.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tabPContSens.Parent" xml:space="preserve">
+    <value>tabC_SigViewer</value>
+  </data>
+  <data name="&gt;&gt;tabPContSens.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="tabPCore.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 22</value>
+  </data>
+  <data name="tabPCore.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 3</value>
+  </data>
+  <data name="tabPCore.Size" type="System.Drawing.Size, System.Drawing">
+    <value>761, 530</value>
+  </data>
+  <data name="tabPCore.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="tabPCore.Text" xml:space="preserve">
+    <value>Core</value>
+  </data>
+  <data name="&gt;&gt;tabPCore.Name" xml:space="preserve">
+    <value>tabPCore</value>
+  </data>
+  <data name="&gt;&gt;tabPCore.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tabPCore.Parent" xml:space="preserve">
+    <value>tabC_SigViewer</value>
+  </data>
+  <data name="&gt;&gt;tabPCore.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <metadata name="Column_Coil.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="Column_Coil.HeaderText" xml:space="preserve">
+    <value>Coil</value>
+  </data>
+  <metadata name="Column_Coil_status.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="Column_Coil_status.HeaderText" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="dataGridViewCoils.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="dataGridViewCoils.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 3</value>
+  </data>
+  <data name="dataGridViewCoils.Size" type="System.Drawing.Size, System.Drawing">
+    <value>755, 524</value>
+  </data>
+  <data name="dataGridViewCoils.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;dataGridViewCoils.Name" xml:space="preserve">
+    <value>dataGridViewCoils</value>
+  </data>
+  <data name="&gt;&gt;dataGridViewCoils.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;dataGridViewCoils.Parent" xml:space="preserve">
+    <value>tabP_Coils</value>
+  </data>
+  <data name="&gt;&gt;dataGridViewCoils.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="tabP_Coils.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 22</value>
+  </data>
+  <data name="tabP_Coils.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 3</value>
+  </data>
+  <data name="tabP_Coils.Size" type="System.Drawing.Size, System.Drawing">
+    <value>761, 530</value>
+  </data>
+  <data name="tabP_Coils.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="tabP_Coils.Text" xml:space="preserve">
+    <value>Coils</value>
+  </data>
+  <data name="&gt;&gt;tabP_Coils.Name" xml:space="preserve">
+    <value>tabP_Coils</value>
+  </data>
+  <data name="&gt;&gt;tabP_Coils.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tabP_Coils.Parent" xml:space="preserve">
+    <value>tabC_SigViewer</value>
+  </data>
+  <data name="&gt;&gt;tabP_Coils.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="tabC_SigViewer.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="tabC_SigViewer.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="tabC_SigViewer.Size" type="System.Drawing.Size, System.Drawing">
+    <value>769, 556</value>
+  </data>
+  <data name="tabC_SigViewer.TabIndex" type="System.Int32, mscorlib">
+    <value>20</value>
+  </data>
+  <data name="&gt;&gt;tabC_SigViewer.Name" xml:space="preserve">
+    <value>tabC_SigViewer</value>
+  </data>
+  <data name="&gt;&gt;tabC_SigViewer.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabControl, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tabC_SigViewer.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;tabC_SigViewer.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
@@ -337,13 +478,25 @@
     <value>GrowAndShrink</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>451, 397</value>
+    <value>769, 556</value>
   </data>
   <data name="$this.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 2, 2, 2</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>Signal Viewer</value>
+  </data>
+  <data name="&gt;&gt;Column_Coil.Name" xml:space="preserve">
+    <value>Column_Coil</value>
+  </data>
+  <data name="&gt;&gt;Column_Coil.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Column_Coil_status.Name" xml:space="preserve">
+    <value>Column_Coil_status</value>
+  </data>
+  <data name="&gt;&gt;Column_Coil_status.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>SignalViewer</value>

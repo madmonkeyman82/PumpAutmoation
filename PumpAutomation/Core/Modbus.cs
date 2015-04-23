@@ -7,561 +7,418 @@ using System.Threading.Tasks;
 using System.Threading;
 using PumpAutomation;
 using PumpAutomation.PLC;
-
+using ModbusTCP;
 
 namespace PumpAutomation
 {
-    class ModbusModule_
+    class Modbus
     {
-       
+
         #region Constructor / Deconstructor
 
-        //private static readonly Lazy<Modbus> lazy = new Lazy<Modbus>(() => new Modbus());
-        //public static Modbus Instance { get { return lazy.Value; } }
-
-        //Constructor
-        public ModbusModule_(bool tcp)
+        public Modbus()
         {
-            SingletonLogger.AddToLog("Loading Core", LogType.Info, LogModule.CORE);
-            _tcpMode = tcp;
+            StartUpdateModbus();
+        }
 
-            if (tcp)
+        ~Modbus()
+        {
+            _IsClosing = true;
+            _tThreadUpdateModbus.Abort();
+            MBmaster.disconnect();
+            if (MBmaster != null)
             {
-               // modbusControlTCP = new ModbusTcpControl();
-               // modbusControlTCP.ConnectTimeout = 1000;
-               // modbusControlTCP.ResponseTimeout = 1000;
-                LoadModbusTcp();
-                SetupUpModbusModuleTcp();
-            }          
-            
-            SingletonLogger.AddToLog("Core Loaded", LogType.Info, LogModule.CORE);
+                MBmaster.Dispose();
+                MBmaster = null;
+            }	
         }
 
-        //Deconstructor
-        ~ModbusModule_()
-        {
 
-        }
 
         #endregion
 
-        #region Private Variables
-        //Private Variables
+        #region Private Vaibles
 
-        //String`s
+        //Modbus Commnunication class
+        private ModbusTCP.Master MBmaster;
 
-
-        // Serial variables
-        private string _ComPort;
-        private int _Baudrate;
-        private System.IO.Ports.Parity _Parity;
-        private System.IO.Ports.StopBits _Stopbits;
-        private int _Databits;
-        private string _Protocol;
-        private int _TimeOut;
-
-        // Ethernet Variables
-        private string _sPlcIPAddress;
-        private int _iPlcPort;
-        private int _iTimeout;
-
-        // Thread`s
-
-
-        // bool`s
-        private bool _bModbusTCPMode = false;
-        private bool IsCommunicationBusy { get; set; }
-        private bool _tcpMode = false;
-
-        // Communication Modules
-          private ModbusTcpControl modbusControlTCP;
-
-
-
-
-
-        // Communication Modules
-        // public Modbus moudbusrtu = new Modbus();
-        //public Plc PlcModule = new Plc();
 
         // Logger Variable
         private Logger SingletonLogger = Logger.Instance;
-        
- 
+
+        // Thread`s
+        private Thread _tThreadUpdateModbus;
+
+        //bool`s
+        private bool _IsClosing = false;
+
         #endregion
 
-        #region Public Variables
-        //Public Variables
+        #region Thread
 
-
-        #endregion
-
-        #region Private Functions
-
-
-        private void LoadModbusTcp()
+        private void StartUpdateModbus()
         {
-            _sPlcIPAddress = Properties.Settings.Default.PlcIP;
-            _iPlcPort = Properties.Settings.Default.PlcIpPort;
-            _iTimeout = 3000;
+            _tThreadUpdateModbus = new Thread(new ThreadStart(this.ThreadUpdateModbus));
+            _tThreadUpdateModbus.IsBackground = true;
+            _tThreadUpdateModbus.Name = "MODBUS UPDATE THREAD";
+            _tThreadUpdateModbus.Start();
+
+           Connect(); // just for testing Modbus- 
         }
 
-        private void SetupUpModbusModuleTcp()
+        private void ThreadUpdateModbus()
         {
-            modbusControlTCP.ConnectTimeout = _iTimeout;
-            //modbusControlTCP.Mode = ModbusTcp.Mode.TCP_IP;
-            // modbusControlTCP.Connect(_sPlcIPAddress, _iPlcPort);
-        }
-
-        private void LoadModbusSerial()
-        {
-            #region Serial
-
-            _ComPort = Properties.Settings.Default.comPort;
-            _Baudrate = Properties.Settings.Default.Baudrate;
-            _TimeOut = Properties.Settings.Default.TimeOut;
-            _Protocol = Properties.Settings.Default.Protocol;
-            _Databits = Properties.Settings.Default.Databits;
-
-            switch (Properties.Settings.Default.Parity)
+            while (!_IsClosing) 
             {
-                case "Even":
-                    {
-                        _Parity = System.IO.Ports.Parity.Even;
-                        break;
-                    }
-                case "Mark":
-                    {
-                        _Parity = System.IO.Ports.Parity.Mark;
-                        break;
-                    }
-                case "None":
-                    {
-                        _Parity = System.IO.Ports.Parity.None;
-                        break;
-                    }
-                case "Odd":
-                    {
-                        _Parity = System.IO.Ports.Parity.Odd;
-                        break;
-                    }
-                case "Space":
-                    {
-                        _Parity = System.IO.Ports.Parity.Space;
-                        break;
-                    }
-            }
+                int PrefCounter = 0;
 
-            switch (Properties.Settings.Default.Stopbits)
-            {
-                case "None":
-                    {
-                        _Stopbits = System.IO.Ports.StopBits.None;
-                        break;
-                    }
-                case "One":
-                    {
-                        _Stopbits = System.IO.Ports.StopBits.One;
-                        break;
-                    }
-                case "OnePointFive":
-                    {
-                        _Stopbits = System.IO.Ports.StopBits.OnePointFive;
-                        break;
-                    }
-                case "Two":
-                    {
-                        _Stopbits = System.IO.Ports.StopBits.Two;
-                        break;
-                    }
-            }
-            #endregion
-        }
-
-
-
-        #endregion // Private Functions
-
-        #region Public Functions
- 
-
-        #region PLC method`s
-
-        #region General
-
-        public bool Connect()
-        {
-       
-               
-                SingletonLogger.AddToLog("Connecting to PLC using " + _Protocol + " and Ethernet ", LogType.Info, LogModule.PLC);
-                try
+                while (_IsConnected)
                 {
-                    if ((result = modbusControlTCP.Connect(_sPlcIPAddress, _iPlcPort)) == Modbus)
+                    int MsNow = DateTime.Now.Millisecond;
+
+                    if (MBmaster.connected)
                     {
-                        SingletonLogger.AddToLog("Connecting to PLC = " + result.ToString(), LogType.Info, LogModule.COM);
-                        return true;
-                    }
-                    else if (result == ModbusTcp.Result.CONNECT_ERROR)
-                    {
-                        Disconnect();
-                        SingletonLogger.AddToLog("Connecting to PLC faild = " + result.ToString(), LogType.Info, LogModule.COM);
-                        return false;
+                        ReadCoils();
+                        ReadHoldRegister();
                     }
                     else
                     {
-                        return false;
+                        _IsConnected = false;
                     }
-                }
-                catch (Exception e)
-                {
-                    SingletonLogger.AddToLog(e.ToString(), LogType.Error, LogModule.PLC);
-                    SingletonLogger.AddToLog(modbusControlTCP.GetLastErrorString(), LogType.Error, LogModule.COM);
-                    return false;
-                }
-            
+
+                    _PreformanceTimeMs[PrefCounter] = Math.Abs((DateTime.Now.Millisecond - MsNow));
+
+                    if (PrefCounter >= 49)
+                    { PrefCounter = 0; }
+                    else
+                    { PrefCounter++; }
+                    
+
+                } // end while _IsConnected
+                Thread.Sleep(20);
+            } // end while _IsClosing
         }
 
-        private void Connect2()
-        {
-            
-            ModbusTcp.Result result;
-            result = modbusControlTCP.Connect(_sPlcIPAddress, _iPlcPort);
-        }
+        #endregion  
 
-        public void Disconnect()
+        
+        #region Modbus General
+
+        // ------------------------------------------------------------------------
+        // Connect
+        // ------------------------------------------------------------------------
+        public bool Connect()
         {
-            if (_tcpMode)
+            if (!_IsConnected)
             {
                 try
                 {
-                    modbusControlTCP.Close();               
+                    // Create new modbus master and add event functions
+                    MBmaster = new Master(_MoudbusIPAddress, _MoudbusPort);
+                    MBmaster.OnResponseData += new ModbusTCP.Master.ResponseData(MBmaster_OnResponseData);
+                    MBmaster.OnException += new ModbusTCP.Master.ExceptionData(MBmaster_OnException);
+                    // Show additional fields, enable watchdog
+                    _IsConnected = true;
+                    return true;
                 }
-                catch (Exception e)
+                catch (SystemException ex)
                 {
-                    SingletonLogger.AddToLog(e.ToString(), LogType.Error, LogModule.PLC);
-                    SingletonLogger.AddToLog(modbusControlTCP.GetLastErrorString(), LogType.Error, LogModule.COM);       
+                    SingletonLogger.AddToLog("Modbus connction error: " + ex.Message, LogType.Error, LogModule.COM);
                 }
-            }
-        }
-
-        public string GetLastErrorString()
-        {
-           return modbusControlTCP.GetLastErrorString();
-        }
-
-        public void test()
-        {
-            //  Read Coils
-            //  Result = modbusControll.ReadCoilsFC1(1, address, (ushort)Coils.Length, Coils); // OBS OBS !!!!!!!!!!!!!
-            //  Read V
-            //  Result = modbusControll.ReadHoldingRegistersFC3(1, addess, 1, VMemValue);
-           bool[] CoilsBuffer = new bool[30]; 
-
-           ModbusTcp.Result Result;
-          // Result = modbusControlTCP.ReadCoils(1, 0, 30, CoilsBuffer);
-           Result = modbusControlTCP.WriteSingleCoil(1, 0, true);
-           // WriteToRegister(0, 50);
-           // WriteToRegister(1, 100);
-           
-        }
-
-        #endregion // General
-
-        #region PLC Read
-
-        #region Coils
-
-
-
-        #region Ethernet TCP/IP
-
-
-        /// <summary>
-        /// Read Bool status of single coil by ushort address
-        /// </summary>
-        /// <param name="adresse"></param>
-        /// <returns></returns>
-        public bool GetCoilStatus(ushort address)
-        {
-            Connect2();
-            bool _Status = false;
-
-            bool[] Coils = new bool[30];
-            ModbusTcp.Result Result;
-            Result = modbusControlTCP.ReadCoils(1, 0, 30, Coils); // OBS OBS !!!!!!!!!!!!!
-            // Result = modbusControll.ReadCoilsFC1(1, address, 1, Coils); 
-           
-            //Result = modbusControll.ReadCoils(1, 0, 10, Coils);
-            if (Result == ModbusTcp.Result.SUCCESS)
-            {
-                _Status = Coils[0];
-                return _Status;
+                return false;
             }
             else
             {
-                SingletonLogger.AddToLog(modbusControlTCP.GetLastErrorString() + _Protocol, LogType.Error, LogModule.COM);
+                return true;
             }
-
-            return _Status;
         }
 
-        /// <summary>
-        /// Read Bool status of range of coil`s 
-        /// </summary>
-        /// <param name="adresse">This is the start adress of the coils</param>
-        /// <param name="Coils">Bool Array to hold the coils </param>
-        /// <returns></returns>
-        public bool GetCoils(ushort address , ref bool[] Coils)
+        // ------------------------------------------------------------------------
+        // DisConnect
+        // ------------------------------------------------------------------------
+        public bool Disconnect()
         {
-            Connect2();
-            ModbusTcp.Result Result;
+            if (MBmaster.connected)
+            {
+                try
+                {
+                    MBmaster.OnException -= MBmaster_OnException;
+                    MBmaster.OnResponseData -= MBmaster_OnResponseData;
+                    MBmaster.disconnect();
+
+                    _IsConnected = false;
+                    return true;
+                }
+                catch (SystemException ex)
+                {
+                    SingletonLogger.AddToLog("Modbus connction error: " + ex.Message, LogType.Error, LogModule.COM);
+                }
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        #endregion
+
+        #region Modbus Read
+
+        // ------------------------------------------------------------------------
+        // Read coils
+        // ------------------------------------------------------------------------
+        private void ReadCoils()
+        {
+            byte[] byteCoilRegisterTemp = new byte[128];
+
+            ushort ID = 1;
+
+            byte UNIT = 0;
+
+            MBmaster.ReadCoils(ID, UNIT, (ushort)0, (ushort)1023, ref byteCoilRegisterTemp);
+            Buffer.BlockCopy(byteCoilRegisterTemp, 0, _CoilsData, 0, byteCoilRegisterTemp.Length);
+        }
+
+
+
+        // ------------------------------------------------------------------------
+        // Read holding register
+        // ------------------------------------------------------------------------
+        private void ReadHoldRegister()
+        {
+            ushort ID = 3;
+            byte UNIT = 0;
             
-            Result = modbusControlTCP.ReadCoils(1, address, (ushort)Coils.Length, Coils); 
+            //-------
+            //Read all Holding Registers in sequence and block copy in to int16 register
+            //0 - 99 
+            //100 - 199
+            //200 - 299
+            //300 - 300
 
-            if (Result == ModbusTcp.Result.SUCCESS)
+            //Check preformance timestamp
+          //  DateTime timeStart = DateTime.Now;
+
+            byte[] byteHoldingRegisterTemp = new byte[99];
+            
+            //0 - 99
+            MBmaster.ReadHoldingRegister(ID, UNIT, (ushort)0, (ushort)99, ref byteHoldingRegisterTemp);
+            Buffer.BlockCopy(byteHoldingRegisterTemp, 0, _RegisterData, 0, byteHoldingRegisterTemp.Length);
+
+            //100 - 199
+            MBmaster.ReadHoldingRegister(ID, UNIT, (ushort)100, (ushort)99, ref byteHoldingRegisterTemp);
+            Buffer.BlockCopy(byteHoldingRegisterTemp, 0, _RegisterData, 199, byteHoldingRegisterTemp.Length);
+
+            //200 - 299
+            MBmaster.ReadHoldingRegister(ID, UNIT, (ushort)200, (ushort)99, ref byteHoldingRegisterTemp);
+            Buffer.BlockCopy(byteHoldingRegisterTemp, 0, _RegisterData, 399, byteHoldingRegisterTemp.Length);
+
+            //300 - 399
+            MBmaster.ReadHoldingRegister(ID, UNIT, (ushort)300, (ushort)99, ref byteHoldingRegisterTemp);
+            Buffer.BlockCopy(byteHoldingRegisterTemp, 0, _RegisterData, 598, byteHoldingRegisterTemp.Length);
+
+            //Check preformnace end
+            //TimeSpan performanceTime = (DateTime.Now - timeStart);
+        }
+
+        // ------------------------------------------------------------------------
+        // Read start address
+        // ------------------------------------------------------------------------
+      /*
+        private ushort ReadStartAdr()
+        {
+
+            
+            // Convert hex numbers into decimal
+            if (txtStartAdress.Text.IndexOf("0x", 0, txtStartAdress.Text.Length) == 0)
             {
-                return true;
+                string str = txtStartAdress.Text.Replace("0x", "");
+                ushort hex = Convert.ToUInt16(str, 16);
+                return hex;
             }
             else
             {
-                SingletonLogger.AddToLog(modbusControlTCP.GetLastErrorString() + _Protocol, LogType.Error, LogModule.COM);
+                return Convert.ToUInt16(txtStartAdress.Text);
+            }
+             
+        }
+       * */
+        #endregion
+
+
+        #region OnResponse
+
+        // ------------------------------------------------------------------------
+        // Event for response data
+        // ------------------------------------------------------------------------
+        private void MBmaster_OnResponseData(ushort ID, byte unit, byte function, byte[] values)
+        {
+            // ------------------------------------------------------------------
+            // Seperate calling threads
+            //if (this.InvokeRequired)
+            //{
+             //   this.BeginInvoke(new Master.ResponseData(MBmaster_OnResponseData), new object[] { ID, unit, function, values });
+              //  return;
+           // }
+
+            // ------------------------------------------------------------------------
+            // Identify requested data
+            switch (ID)
+            {
+                case 1:
+                    SingletonLogger.AddToLog("Read coils", LogType.Info, LogModule.COM);
+                    
+                    break;
+                case 2:
+                    //grpData.Text = "Read discrete inputs";
+                    //data = values;
+                   
+                    break;
+                case 3:
+                    SingletonLogger.AddToLog("Read holding register", LogType.Info, LogModule.COM);
+
+                    //short[] sdata = new short[(int)Math.Ceiling(Convert.ToDouble(values.Length / 2))];
+                    
+                    Buffer.BlockCopy(values, 0, _RegisterData, 199, values.Length);
+
+                    // _RegisterData = values;
+                    
+                    break;
+                case 4:
+                    //grpData.Text = "Read input register";
+                   // data = values;
+                    
+                    break;
+                case 5:
+                    SingletonLogger.AddToLog("Write single coil", LogType.Info, LogModule.COM);
+                    break;
+                case 6:
+                    SingletonLogger.AddToLog("Write multiple coils", LogType.Info, LogModule.COM);
+                    break;
+                case 7:
+                    SingletonLogger.AddToLog("Write single register", LogType.Info, LogModule.COM);
+                    break;
+                case 8:
+                    SingletonLogger.AddToLog("Write multiple register", LogType.Info, LogModule.COM);
+                    break;
+            }
+        }
+
+        // ------------------------------------------------------------------------
+        // Modbus TCP slave exception
+        // ------------------------------------------------------------------------
+        private void MBmaster_OnException(ushort id, byte unit, byte function, byte exception)
+        {
+            string exc = "Modbus says error: ";
+            switch (exception)
+            {
+                case Master.excIllegalFunction: exc += "Illegal function!"; break;
+                case Master.excIllegalDataAdr: exc += "Illegal data adress!"; break;
+                case Master.excIllegalDataVal: exc += "Illegal data value!"; break;
+                case Master.excSlaveDeviceFailure: exc += "Slave device failure!"; break;
+                case Master.excAck: exc += "Acknoledge!"; break;
+                case Master.excGatePathUnavailable: exc += "Gateway path unavailbale!"; break;
+                case Master.excExceptionTimeout: exc += "Slave timed out!"; break;
+                case Master.excExceptionConnectionLost: exc += "Connection is lost!"; break;
+                case Master.excExceptionNotConnected: exc += "Not connected!"; break;
             }
 
-            return false;
+            SingletonLogger.AddToLog("Modbus slave exception", LogType.Error, LogModule.COM);
         }
 
         #endregion
 
-        #endregion // Coils
-
-        #region Holding registers
-
-
-        #region Ethernet/IP
-
-        /// <summary>
-        /// Read Word 16bit from ushort address
-        /// </summary>
-        /// <param name="Ctype"></param>
-        /// <returns></returns>
-        public short ReadWordValue(ushort addess)
-        {
-            Connect2();
-            while (IsCommunicationBusy)
-            {
-                Thread.Sleep(10);
-            }
-            IsCommunicationBusy = true;
-
-            ModbusTcp.Result Result;
-            short[] VMemValue = new short[1];
-
-            Result = modbusControlTCP.ReadHoldingRegisters(1, addess, 1, VMemValue);
-
-            if (Result == ModbusTcp.Result.SUCCESS)
-            {
-
-                IsCommunicationBusy = false;
-                return VMemValue[0];
-            }
-            else
-            {
-                SingletonLogger.AddToLog(modbusControlTCP.GetLastErrorString() + _Protocol, LogType.Error, LogModule.COM);
-            }
-
-            IsCommunicationBusy = false;
-            return VMemValue[0];
-        }
-
-        public short ReadWordValue(PumpAutomation.PLC.VPlcTime Vtype)
-        {
-
-            while (IsCommunicationBusy)
-            {
-                Thread.Sleep(10);
-            }
-            IsCommunicationBusy = true;
-
-            short[] VMemValue = new short[1];
-            ModbusTcp.Result Result;
-            ushort addess = (PlcCovnertions.GetVariableAddresse(Vtype));
-
-            Result = modbusControlTCP.ReadHoldingRegisters(1, addess, 1, VMemValue);
-
-            if (Result == ModbusTcp.Result.SUCCESS)
-            {
-
-                IsCommunicationBusy = false;
-                return VMemValue[0];
-            }
-            else
-            {
-                SingletonLogger.AddToLog(modbusControlTCP.GetLastErrorString() + _Protocol, LogType.Error, LogModule.COM);
-            }
-
-            IsCommunicationBusy = false;
-            return VMemValue[0];
-        }
-
-        /// <summary>
-        /// Read Word 16bit from ushort address
-        /// </summary>
-        /// <param name="address"> Start address</param>
-        /// <param name="Registers">How Many registers to read</param>
-        /// <returns></returns>
-        public bool ReadWordValueS(ushort address, ushort quantity, ref short[] Registers)
-        {
-            Connect2();
-            while (IsCommunicationBusy)
-            {
-                Thread.Sleep(10);
-            }
-            IsCommunicationBusy = true;
-
-            ModbusTcp.Result Result;
-
-            Result = modbusControlTCP.ReadHoldingRegisters(1, address, quantity, Registers);
-                
-            if (Result == ModbusTcp.Result.SUCCESS)
-            {
-
-                IsCommunicationBusy = false;
-                return true;
-            }
-            else
-            {
-                SingletonLogger.AddToLog(modbusControlTCP.GetLastErrorString() + _Protocol, LogType.Error, LogModule.COM);
-            }
-
-            IsCommunicationBusy = false;
-            return false;
-
-        }
-
-        #endregion // Ethernet/IP
-
-        #endregion // holding registers
-
-        
-
-        #endregion // PLC Read
-
-        #region PLC Write
-
-        #region Coils
-
-        #region Ethernet/TCP
-
-        /// <summary>
-        /// Write to Coil register by ushort address With value either true / false
-        /// </summary>
-        /// <param name="adresse"></param>
-        /// <param name="NewCoilStatus"></param>
-        /// <returns></returns>
-        public bool WriteToCoil(ushort address, bool NewCoilStatus)
-        {
-            Connect2();
-            bool _Status = false;
-            ModbusTcp.Result Result;
-            Result = modbusControlTCP.WriteSingleCoil(1, address, NewCoilStatus);
-
-            if (Result == ModbusTcp.Result.SUCCESS)
-            {
-                _Status = true;
-                return _Status;
-            }
-            else
-            {
-                SingletonLogger.AddToLog("Error in plc --> com ", LogType.Error, LogModule.PLC);
-                SingletonLogger.AddToLog(modbusControlTCP.GetLastErrorString(), LogType.Error, LogModule.COM);
-            }
-            return _Status;
-        }
-
-        #endregion //Ethernet/TCP
-
-        #endregion // Coils
-
-        #region Holding Registers
-
-        #region  Ethernet/TCP
-        
-        /// <summary>
-        /// Write to Holding register ex:MHR1, MHR2 by short address with value either 16bit value
-        /// </summary>
-        /// <param name="adresse"></param>
-        /// <param name="SetValue"></param>
-        /// <returns></returns>
-        public bool WriteToRegister(ushort address, short SetValue)
-        {
-            Connect2();
-            bool _Status = false;
-            ModbusTcp.Result Result;
-
-            Result = modbusControlTCP.WriteSingleRegister(1, address, SetValue);
-
-            if (Result == ModbusTcp.Result.SUCCESS)
-            {
-                _Status = true;
-                return _Status;
-            }
-            else
-            {
-                SingletonLogger.AddToLog("Error in plc --> com ", LogType.Error, LogModule.PLC);
-                SingletonLogger.AddToLog(modbusControlTCP.GetLastErrorString(), LogType.Error, LogModule.COM);
-            }
-
-            return _Status;
-        }
-
-        #endregion
-
-
-
-        #endregion // Holding Registers
-
-        #endregion // PLC Write
-
-        #endregion // PLC method`s
-
-        #endregion // Public Functios
-
-        
         #region Get / Set
 
-        private string _MoudbusIPAddress;
-        public string MoudbusIPAddress 
+        // ------------------------------------------------------------------------
+        // Modbus TCP Connection Ip address
+        // ------------------------------------------------------------------------
+        private string _MoudbusIPAddress = "192.168.1.23";
+        public string MoudbusIPAddress
         {
             get
             {
-           
-                   return _MoudbusIPAddress;
+
+                return _MoudbusIPAddress;
             }
             set
             {
                 _MoudbusIPAddress = value;
             }
-              
+
         }
 
-        private int _CoilsInPlc = 0;
-        public int CoilsInPlc
+
+        // ------------------------------------------------------------------------
+        // Modbus TCP Connection port
+        // ------------------------------------------------------------------------
+        private ushort _MoudbusPort = 502;
+        public ushort MoudbusPort
         {
             get
             {
-                return _CoilsInPlc;
+
+                return _MoudbusPort;
             }
-            
             set
             {
-                _CoilsInPlc = value;
+                _MoudbusPort = value;
+            }
+
+        }
+
+        // ------------------------------------------------------------------------
+        // Modbus TCP Connection status
+        // ------------------------------------------------------------------------
+        private bool _IsConnected;
+        public bool IsConnected
+        {
+            get
+            {
+
+                return _IsConnected;
+            }
+
+        }
+
+        // ------------------------------------------------------------------------
+        // Preformence info update thread Returns ms time 
+        // ------------------------------------------------------------------------
+        private int[] _PreformanceTimeMs = new int[50];
+        public int PreformanceTimeMs
+        {
+            get
+            {
+                return (_PreformanceTimeMs.Sum()/_PreformanceTimeMs.Length);
             }
         }
 
+
+        // ------------------------------------------------------------------------
+        // Data object with all plc coil`s
+        // ------------------------------------------------------------------------
+        private bool[] _CoilsData = new bool[1024]; // 1024 bits in MC0-1023
+        public bool[] CoilsData
+        {
+            get 
+            {
+                return _CoilsData;
+            }
+        }
+
+        // ------------------------------------------------------------------------
+        // Data object with all plc coil`s
+        // ------------------------------------------------------------------------
+        private Int16[] _RegisterData = new Int16[2048]; // 2048 word signed 16-bit in MHR0-2048
+        public Int16[] RegisterData
+        {
+            get
+            {
+                return _RegisterData;
+            }
+        }
+
+        #endregion
     }
-
-
-        #endregion // Get / Set
-
-    }
-
+}

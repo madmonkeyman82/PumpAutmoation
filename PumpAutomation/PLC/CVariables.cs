@@ -58,6 +58,7 @@ namespace PumpAutomation.PLC
     {
         MBPump1Start = 1,        //This is to start & stop the pump.
         MBPump1On = 2,           //This is true then pump is running.
+       /*
         Unused1 = 3,           //Unused
         Unused2 = 4,           //Unused
         Unused3 = 5,           //Unused
@@ -65,8 +66,11 @@ namespace PumpAutomation.PLC
         Unused5 = 7,           //Unused
         Unused6 = 8,           //Unused
         Unused7 = 9,           //Unused
-        MBSimulationMode = 10,    //This is to activate simulation mode.. no actual output from the plc will happen. numbers are randomly generated.
+        */
+        MBSimulationMode = 10,  //This is to activate simulation mode.. no actual output from the plc will happen. numbers are randomly generated.
         MBWatchDog = 11,        // WatchDog bit is always high when plc is on and connected.
         MBIsAlive = 12,         // Watchdog bit that toggles every second.
+        MBWatchDogold = 103,    // not used
+        MBIsAliveold = 104,     // not used
     }
 }

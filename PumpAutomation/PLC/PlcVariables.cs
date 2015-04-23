@@ -13,9 +13,9 @@ namespace PumpAutomation.PLC
 
          }
 
-#region Private var`s
+        #region Private var`s
 
-#endregion
+        #endregion
 
          #region Public var`s
 
@@ -25,6 +25,8 @@ namespace PumpAutomation.PLC
 
              public bool _MBPump1Start { get; set; }
              public bool _MBPump1On { get; set; }
+
+        /*
              public bool _Unused1 { get; set; }
              public bool _Unused2 { get; set; }
              public bool _Unused3 { get; set; }
@@ -32,6 +34,7 @@ namespace PumpAutomation.PLC
              public bool _Unused5 { get; set; }
              public bool _Unused6 { get; set; }
              public bool _Unused7 { get; set; }
+         */
              public bool _MBSimulationMode { get; set; }
              public bool _MBWatchDog { get; set; }
              public bool _MBIsAlive { get; set; }
