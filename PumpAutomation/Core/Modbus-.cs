@@ -91,7 +91,7 @@ namespace PumpAutomation
                     // ?: conditional operator.
                     //classify = (input > 0) ? "positive" : "negative";
 
-                    if (PrefCounter >= 4)
+                    if (PrefCounter >= 49)
                     { PrefCounter = 0; }
                     else
                     { PrefCounter++; }
@@ -388,12 +388,12 @@ namespace PumpAutomation
         // ------------------------------------------------------------------------
         // Preformence info update thread Returns ms time 
         // ------------------------------------------------------------------------
-        private int[] _PreformanceTimeMs = new int[5];
+        private int[] _PreformanceTimeMs = new int[50];
         public int PreformanceTimeMs
         {
             get
             {
-                return (_PreformanceTimeMs.Sum()/5);
+                return (_PreformanceTimeMs.Sum()/_PreformanceTimeMs.Length);
             }
         }
 
