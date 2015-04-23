@@ -27,7 +27,9 @@ namespace PumpAutomation
         public SignalViewer()
         {
             InitializeComponent();
+            dataGridViewCoils.Rows.Add(1024);
             SetupTimer();
+           
         }
 
         ~SignalViewer()
@@ -89,8 +91,14 @@ namespace PumpAutomation
             }
             else
             {
-                dataGridViewCoils.DataSource = (from arr in coils select new { Column_Coil_status = arr });
-                dataGridViewCoils.PerformLayout();         
+                int l = coils.Length;
+                for (int i = 0; i < l; i++)
+                {
+                    //string[] row = new string[] { i.ToString(), coils[i].ToString() };
+                    //dataGridViewCoils.Rows.Add(row);
+ 
+                        dataGridViewCoils.Rows[i].SetValues(i.ToString(), coils[i].ToString());          
+                }
             }
         }
 
