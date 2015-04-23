@@ -46,15 +46,7 @@ namespace PumpAutomation
 
         //String`s
         private string _Status = "Startup";
-
-        // Serial variables
-        private string _ComPort;
-        private int _Baudrate;
-        private System.IO.Ports.Parity _Parity;
-        private System.IO.Ports.StopBits _Stopbits;
-        private int _Databits;
-        private string _Protocol;
-        private int _TimeOut;
+ 
 
         // Ethernet Variables
         private string _sPlcIPAddress;
@@ -71,7 +63,7 @@ namespace PumpAutomation
         // bool`s
         private bool _bStopUpdatePlcThread = false;
         private bool _bIsPlcConnected = false;
-        private bool _bModbusTCPMode = false;
+
    
 
         // Communication Modules
@@ -136,7 +128,7 @@ namespace PumpAutomation
                 {
 
                     ReadAllCoils();
-                    //ReadAllVMemories();
+                    ReadAllVMemories();
                     //ReadPlcTime();
                     test();
                     Thread.Sleep(_iTheadUpdateSlowDelay);
@@ -150,58 +142,38 @@ namespace PumpAutomation
         /// </summary>
         private void ReadAllCoils()
         {
-            //bool[] CoilsBuffer = new bool[Enum.GetNames(typeof(CPlcVariableDoMore)).Length];
-            //if (GetCoils(0, ref CoilsBuffer))
-           // {
-                _PlcVariables._MBPump1Start = _modbusControl.CoilsData[(int)CPlcVariableDoMore.MBPump1Start];             /*
-                _PlcVariables._MBPump1Start = CoilsBuffer[0];
-                _PlcVariables._MBPump1On = CoilsBuffer[1];
-                _PlcVariables._Unused1 = CoilsBuffer[2];
-                _PlcVariables._Unused2 = CoilsBuffer[3];
-                _PlcVariables._Unused3 = CoilsBuffer[4];
-                _PlcVariables._Unused4 = CoilsBuffer[5];
-                _PlcVariables._Unused5 = CoilsBuffer[6];
-                _PlcVariables._Unused6 = CoilsBuffer[7];
-                _PlcVariables._Unused7 = CoilsBuffer[8];
-                _PlcVariables._MBSimulationMode = CoilsBuffer[9];
-                _PlcVariables._MBWatchDog = CoilsBuffer[10];
-                _PlcVariables._MBIsAlive = CoilsBuffer[11];
-                 */
-           // }
+                _PlcVariables._MBPump1Start = _modbusControl.CoilsData[(int)CPlcVariableDoMore.MBPump1Start];             
+                _PlcVariables._MBPump1On = _modbusControl.CoilsData[(int)CPlcVariableDoMore.MBPump1On]; 
+                _PlcVariables._MBSimulationMode = _modbusControl.CoilsData[(int)CPlcVariableDoMore.MBSimulationMode];
+                _PlcVariables._MBWatchDog = _modbusControl.CoilsData[(int)CPlcVariableDoMore.MBWatchDog];
+                _PlcVariables._MBIsAlive = _modbusControl.CoilsData[(int)CPlcVariableDoMore.MBIsAlive];
         }
 
         private void ReadAllVMemories()
         {
-
-            short[] Vmemories = new short[Enum.GetNames(typeof(VPlcVariable)).Length];
-            ushort quantity = (ushort)Enum.GetNames(typeof(VPlcVariable)).Length;
-
-            if (ReadWordValueS(99, quantity, ref Vmemories))
-            {
-                _PlcVariables.MBFlow1 = Vmemories[0];
-                _PlcVariables.MBPressure1 = Vmemories[1];
-                _PlcVariables.MB_T_Filter1 = Vmemories[2];
-                _PlcVariables.MBConSens4 = Vmemories[3];
-                _PlcVariables.MBConSens6 = Vmemories[4];
-                _PlcVariables.MBConSens14 = Vmemories[5];
-                _PlcVariables.MBConSens21 = Vmemories[6];
-                _PlcVariables.MBConSensStaus = Vmemories[7];
-                _PlcVariables.MBConSensmA = Vmemories[8];
-                _PlcVariables.MBFlow2 = Vmemories[9];
-                _PlcVariables.MBPressure2 = Vmemories[10];
-                _PlcVariables.MBWaterContent = Vmemories[11];
-                _PlcVariables.MBOilTemp = Vmemories[12];
-                _PlcVariables.MB_T_Filter2 = Vmemories[13];
-                _PlcVariables.MBRFilter = Vmemories[14];
-            }    
+                _PlcVariables.MBFlow1 = _modbusControl.RegisterData[(int)VPlcVariable.MBFlow1];
+                _PlcVariables.MBPressure1 = _modbusControl.RegisterData[(int)VPlcVariable.MBPressure1];
+                _PlcVariables.MB_T_Filter1 = _modbusControl.RegisterData[(int)VPlcVariable.MB_T_Filter1];
+                _PlcVariables.MBConSens4 = _modbusControl.RegisterData[(int)VPlcVariable.MBConSens4];
+                _PlcVariables.MBConSens6 = _modbusControl.RegisterData[(int)VPlcVariable.MBConSens6];
+                _PlcVariables.MBConSens14 = _modbusControl.RegisterData[(int)VPlcVariable.MBConSens14];
+                _PlcVariables.MBConSens21 = _modbusControl.RegisterData[(int)VPlcVariable.MBConSens21];
+                _PlcVariables.MBConSensStaus = _modbusControl.RegisterData[(int)VPlcVariable.MBConSensStaus];
+                _PlcVariables.MBConSensmA = _modbusControl.RegisterData[(int)VPlcVariable.MBConSensmA];
+                _PlcVariables.MBFlow2 = _modbusControl.RegisterData[(int)VPlcVariable.MBFlow2];
+                _PlcVariables.MBPressure2 = _modbusControl.RegisterData[(int)VPlcVariable.MBPressure2];
+                _PlcVariables.MBWaterContent = _modbusControl.RegisterData[(int)VPlcVariable.MBWaterContent];
+                _PlcVariables.MBOilTemp = _modbusControl.RegisterData[(int)VPlcVariable.MBOilTemp];
+                _PlcVariables.MB_T_Filter2 = _modbusControl.RegisterData[(int)VPlcVariable.MB_TFilter2];
+                _PlcVariables.MBRFilter = _modbusControl.RegisterData[(int)VPlcVariable.MBRFilter];          
         }
 
         private void ReadPlcTime()
         {
-            _PlcVariables.PlcTime = "PLC Time " + 
-                                    ReadWordValue(VPlcTime.PlcHour).ToString() + ":" +
-                                    ReadWordValue(VPlcTime.PLCMin).ToString() + ":" +
-                                    ReadWordValue(VPlcTime.PLCSecond).ToString();
+            _PlcVariables.PlcTime = "PLC Time " +
+                                    _modbusControl.RegisterData[(int)VPlcTime.PlcHour].ToString() + ":" +
+                                    _modbusControl.RegisterData[(int)VPlcTime.PLCMin].ToString() + ":" +
+                                    _modbusControl.RegisterData[(int)VPlcTime.PLCSecond].ToString();
         }
 
         #endregion
@@ -241,7 +213,7 @@ namespace PumpAutomation
 
             public bool ConnectToPlc()
             {
-                    SingletonLogger.AddToLog("Connecting to PLC using " + _Protocol + " and Ethernet ", LogType.Info, LogModule.PLC);
+                    SingletonLogger.AddToLog("Connecting to PLC using Ethernet ", LogType.Info, LogModule.PLC);
                     try
                     {
                         if ( _modbusControl.Connect())
