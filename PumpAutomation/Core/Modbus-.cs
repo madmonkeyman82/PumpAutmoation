@@ -78,7 +78,7 @@ namespace PumpAutomation
 
                     if (MBmaster.connected)
                     {
-                        ReadCoils(1, 0, 1023);
+                        ReadCoils();
                         ReadHoldRegister();
                     }
                     else
@@ -86,7 +86,7 @@ namespace PumpAutomation
                         _IsConnected = false;
                     }
 
-                    _PreformanceTimeMs[PrefCounter] = (DateTime.Now.Millisecond - MsNow);
+                    _PreformanceTimeMs[PrefCounter] = Math.Abs((DateTime.Now.Millisecond - MsNow));
 
                     // ?: conditional operator.
                     //classify = (input > 0) ? "positive" : "negative";
@@ -171,17 +171,16 @@ namespace PumpAutomation
         // ------------------------------------------------------------------------
         // Read coils
         // ------------------------------------------------------------------------
-        private void ReadCoils(int unit, int startaddr, int length)
+        private void ReadCoils()
         {
+            byte[] byteCoilRegisterTemp = new byte[128];
+
             ushort ID = 1;
 
-            byte UNIT = Convert.ToByte(unit);
+            byte UNIT = 0;
 
-            ushort STRADDR = Convert.ToUInt16(startaddr);
-
-            ushort LENGTH = Convert.ToUInt16(length);
-
-            MBmaster.ReadCoils(ID, UNIT, STRADDR, LENGTH);
+            MBmaster.ReadCoils(ID, UNIT, (ushort)0, (ushort)1023, ref byteCoilRegisterTemp);
+            Buffer.BlockCopy(byteCoilRegisterTemp, 0, _CoilsData, 0, byteCoilRegisterTemp.Length);
         }
 
 
@@ -202,28 +201,28 @@ namespace PumpAutomation
             //300 - 300
 
             //Check preformance timestamp
-            DateTime timeStart = DateTime.Now;
+          //  DateTime timeStart = DateTime.Now;
 
-            byte[] byteTemp = new byte[99];
+            byte[] byteHoldingRegisterTemp = new byte[99];
             
             //0 - 99
-            MBmaster.ReadHoldingRegister(ID, UNIT, (ushort)0, (ushort)99, ref byteTemp);
-            Buffer.BlockCopy(byteTemp, 0, _RegisterData, 0, byteTemp.Length);
+            MBmaster.ReadHoldingRegister(ID, UNIT, (ushort)0, (ushort)99, ref byteHoldingRegisterTemp);
+            Buffer.BlockCopy(byteHoldingRegisterTemp, 0, _RegisterData, 0, byteHoldingRegisterTemp.Length);
 
             //100 - 199
-            MBmaster.ReadHoldingRegister(ID, UNIT, (ushort)100, (ushort)99, ref byteTemp);
-            Buffer.BlockCopy(byteTemp, 0, _RegisterData, 199, byteTemp.Length);
+            MBmaster.ReadHoldingRegister(ID, UNIT, (ushort)100, (ushort)99, ref byteHoldingRegisterTemp);
+            Buffer.BlockCopy(byteHoldingRegisterTemp, 0, _RegisterData, 199, byteHoldingRegisterTemp.Length);
 
             //200 - 299
-            MBmaster.ReadHoldingRegister(ID, UNIT, (ushort)200, (ushort)99, ref byteTemp);
-            Buffer.BlockCopy(byteTemp, 0, _RegisterData, 399, byteTemp.Length);
+            MBmaster.ReadHoldingRegister(ID, UNIT, (ushort)200, (ushort)99, ref byteHoldingRegisterTemp);
+            Buffer.BlockCopy(byteHoldingRegisterTemp, 0, _RegisterData, 399, byteHoldingRegisterTemp.Length);
 
             //300 - 399
-            MBmaster.ReadHoldingRegister(ID, UNIT, (ushort)300, (ushort)99, ref byteTemp);
-            Buffer.BlockCopy(byteTemp, 0, _RegisterData, 598, byteTemp.Length);
+            MBmaster.ReadHoldingRegister(ID, UNIT, (ushort)300, (ushort)99, ref byteHoldingRegisterTemp);
+            Buffer.BlockCopy(byteHoldingRegisterTemp, 0, _RegisterData, 598, byteHoldingRegisterTemp.Length);
 
             //Check preformnace end
-            TimeSpan performanceTime = (DateTime.Now - timeStart);
+            //TimeSpan performanceTime = (DateTime.Now - timeStart);
         }
 
         // ------------------------------------------------------------------------
@@ -272,8 +271,6 @@ namespace PumpAutomation
             {
                 case 1:
                     SingletonLogger.AddToLog("Read coils", LogType.Info, LogModule.COM);
-                   
-                    _CoilsData = values;
                     
                     break;
                 case 2:
@@ -391,7 +388,7 @@ namespace PumpAutomation
         // ------------------------------------------------------------------------
         // Preformence info update thread Returns ms time 
         // ------------------------------------------------------------------------
-        private int[] _PreformanceTimeMs = new int[4];
+        private int[] _PreformanceTimeMs = new int[5];
         public int PreformanceTimeMs
         {
             get

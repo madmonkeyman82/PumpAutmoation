@@ -135,9 +135,10 @@ namespace PumpAutomation
                 while (_bIsPlcConnected)
                 {
 
-                    ReadAllCoils();
+                    //ReadAllCoils();
                     //ReadAllVMemories();
                     //ReadPlcTime();
+                    test();
                     Thread.Sleep(_iTheadUpdateSlowDelay);
                 }
             }
@@ -272,7 +273,7 @@ namespace PumpAutomation
                                 _bIsPlcConnected = true;
                                 _bStopUpdatePlcThread = false;
                                 SingletonLogger.AddToLog("Connecting to PLC = " , LogType.Info, LogModule.COM);
-                               // StartUpdatePlcVarsThread(); // Update thread    
+                                StartUpdatePlcVarsThread(); // Update thread    
                                 return true;
                         }
                         else
@@ -313,7 +314,8 @@ namespace PumpAutomation
 
             public void test()
             {
-              //  _modbusControl.test();           
+              //  _modbusControl.test(); 
+                int PrefSpeed = _modbusControl.PreformanceTimeMs;
             }
 
             #region PLC Read
