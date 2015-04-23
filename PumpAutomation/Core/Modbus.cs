@@ -78,8 +78,17 @@ namespace PumpAutomation
 
                     if (MBmaster.connected)
                     {
-                        ReadCoils();
-                        ReadHoldRegister();
+                        try
+                        {
+                            ReadCoils();
+                            ReadHoldRegister();
+                        }
+                        catch (Exception)
+                        {
+                            
+                            throw;
+                        }
+                      
                     }
                     else
                     {
@@ -177,7 +186,8 @@ namespace PumpAutomation
             byte UNIT = 0;
 
             MBmaster.ReadCoils(ID, UNIT, (ushort)0, (ushort)1023, ref byteCoilRegisterTemp);
-            Buffer.BlockCopy(byteCoilRegisterTemp, 0, _CoilsData, 0, byteCoilRegisterTemp.Length);
+            _CoilsData = new BitArray(byteCoilRegisterTemp);
+            //Buffer.BlockCopy(byteCoilRegisterTemp, 0, _CoilsData, 0, byteCoilRegisterTemp.Length);
         }
 
 
@@ -320,7 +330,10 @@ namespace PumpAutomation
                 case Master.excAck: exc += "Acknoledge!"; break;
                 case Master.excGatePathUnavailable: exc += "Gateway path unavailbale!"; break;
                 case Master.excExceptionTimeout: exc += "Slave timed out!"; break;
-                case Master.excExceptionConnectionLost: exc += "Connection is lost!"; break;
+
+                case Master.excExceptionConnectionLost: exc += "Connection is lost!";
+                    _IsConnected = false;
+                    break;
                 case Master.excExceptionNotConnected: exc += "Not connected!"; break;
             }
 
@@ -398,12 +411,22 @@ namespace PumpAutomation
         // ------------------------------------------------------------------------
         // Data object with all plc coil`s
         // ------------------------------------------------------------------------
-        private bool[] _CoilsData = new bool[1024]; // 1024 bits in MC0-1023
-        public bool[] CoilsData
+        private BitArray _CoilsData = new BitArray(1024); // 1024 bits in MC0-1023
+        public BitArray CoilsData
         {
             get 
             {
-                return _CoilsData;
+                     //... bitArray is the BitArray instance
+                    
+                BitArray _CoilsDataTemp = new BitArray(1024);
+
+                    for (int i = 0; i < _CoilsData.Count-1; i++)
+                    {
+                       _CoilsDataTemp[i+1] = _CoilsData[i];
+                    }
+
+                    _CoilsDataTemp[0] = false; // or true, whatever you want to shift in
+                    return _CoilsDataTemp;
             }
         }
 

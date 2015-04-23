@@ -491,7 +491,7 @@ namespace PumpAutomation
 
         public int ModbusPreformance { get { return _modbusControl.PreformanceTimeMs; } }
 
-        public bool[] ModbusCoilArray { get { return _modbusControl.CoilsData; } }
+        public BitArray ModbusCoilArray { get { return _modbusControl.CoilsData; } }
 
         public bool IsPlcConnected 
         {

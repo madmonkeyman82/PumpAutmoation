@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
@@ -16,7 +17,7 @@ namespace PumpAutomation
         #region GUI Delegate Declarations
         //public delegate void GUIDelegate(string paramString, DateTime datetime);
         public delegate void GUIDelegate(Control control, string text );
-        public delegate void GUIDelegateCoils(bool[] coils);
+        public delegate void GUIDelegateCoils(BitArray coils);
         #endregion
 
         private Core SingletonPls = Core.Instance;
@@ -82,7 +83,7 @@ namespace PumpAutomation
             }
         }
 
-        public void DoGUIUpdateCoils(bool[] coils)
+        public void DoGUIUpdateCoils(BitArray coils)
         {
             if (this.InvokeRequired)
             {
