@@ -514,6 +514,9 @@ namespace PumpAutomation
         #region Get / Set
 
         public string Status { get { return _Status; } }
+
+        public int ModbusPreformance { get { return _modbusControl.PreformanceTimeMs; } }
+
         public bool IsPlcConnected 
         {
             get

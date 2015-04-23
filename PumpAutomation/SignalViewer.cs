@@ -44,8 +44,12 @@ namespace PumpAutomation
 
         void timer_Tick(object sender, EventArgs e)
         {
+            //Contamination sensor mA
             double mA = (double)SingletonPls._PlcVariables.MBConSensmA / 256;
             DoGUIUpdate(txt_pls_partical_ma, Math.Round(mA, 2).ToString());
+
+            // Core -> Modbus -> thred preformancespeed
+            DoGUIUpdate(txt_MbSpeed, SingletonPls.ModbusPreformance.ToString());
         }
 
         #region Delegate Functions
