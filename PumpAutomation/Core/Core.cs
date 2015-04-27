@@ -129,8 +129,8 @@ namespace PumpAutomation
 
                     ReadAllCoils();
                     ReadAllVMemories();
-                    //ReadPlcTime();
-                    test();
+                    ReadPlcTime();
+                    //test();
                     Thread.Sleep(_iTheadUpdateSlowDelay);
                 }
             }
@@ -140,48 +140,11 @@ namespace PumpAutomation
         /// <summary>
         /// Main update thread!!!
         /// </summary>
-        private void ReadAllCoils()
-        {
-                _PlcVariables._MBPump1Start = _modbusControl.CoilsData[(int)CPlcVariableDoMore.MBPump1Start];             
-                _PlcVariables._MBPump1On = _modbusControl.CoilsData[(int)CPlcVariableDoMore.MBPump1On]; 
-                _PlcVariables._MBSimulationMode = _modbusControl.CoilsData[(int)CPlcVariableDoMore.MBSimulationMode];
-                _PlcVariables._MBWatchDog = _modbusControl.CoilsData[(int)CPlcVariableDoMore.MBWatchDog];
-                _PlcVariables._MBIsAlive = _modbusControl.CoilsData[(int)CPlcVariableDoMore.MBIsAlive];
-        }
-
-        private void ReadAllVMemories()
-        {
-                _PlcVariables.MBFlow1 = _modbusControl.RegisterData[(int)VPlcVariable.MBFlow1];
-                _PlcVariables.MBPressure1 = _modbusControl.RegisterData[(int)VPlcVariable.MBPressure1];
-                _PlcVariables.MB_T_Filter1 = _modbusControl.RegisterData[(int)VPlcVariable.MB_T_Filter1];
-                _PlcVariables.MBConSens4 = _modbusControl.RegisterData[(int)VPlcVariable.MBConSens4];
-                _PlcVariables.MBConSens6 = _modbusControl.RegisterData[(int)VPlcVariable.MBConSens6];
-                _PlcVariables.MBConSens14 = _modbusControl.RegisterData[(int)VPlcVariable.MBConSens14];
-                _PlcVariables.MBConSens21 = _modbusControl.RegisterData[(int)VPlcVariable.MBConSens21];
-                _PlcVariables.MBConSensStaus = _modbusControl.RegisterData[(int)VPlcVariable.MBConSensStaus];
-                _PlcVariables.MBConSensmA = _modbusControl.RegisterData[(int)VPlcVariable.MBConSensmA];
-                _PlcVariables.MBFlow2 = _modbusControl.RegisterData[(int)VPlcVariable.MBFlow2];
-                _PlcVariables.MBPressure2 = _modbusControl.RegisterData[(int)VPlcVariable.MBPressure2];
-                _PlcVariables.MBWaterContent = _modbusControl.RegisterData[(int)VPlcVariable.MBWaterContent];
-                _PlcVariables.MBOilTemp = _modbusControl.RegisterData[(int)VPlcVariable.MBOilTemp];
-                _PlcVariables.MB_T_Filter2 = _modbusControl.RegisterData[(int)VPlcVariable.MB_TFilter2];
-                _PlcVariables.MBRFilter = _modbusControl.RegisterData[(int)VPlcVariable.MBRFilter];          
-        }
-
-        private void ReadPlcTime()
-        {
-            _PlcVariables.PlcTime = "PLC Time " +
-                                    _modbusControl.RegisterData[(int)VPlcTime.PlcHour].ToString() + ":" +
-                                    _modbusControl.RegisterData[(int)VPlcTime.PLCMin].ToString() + ":" +
-                                    _modbusControl.RegisterData[(int)VPlcTime.PLCSecond].ToString();
-        }
-
-        #endregion
-
 
 
         #endregion
 
+        #endregion
 
         private void LoadSettings()
         {
@@ -189,19 +152,12 @@ namespace PumpAutomation
 
             _modbusControl = new Modbus();
             
-            LoadPLCVariables();
         }
 
         private void LoadVariables()
         {
             _iTheadUpdateFastDelay = Properties.Settings.Default.PlcUpdatetimeFastCylce;
             _iTheadUpdateSlowDelay = Properties.Settings.Default.PlcUpdatetimeSlowCylce;
-        }
-
-
-        private void LoadPLCVariables()
-        {
-
         }
 
         #endregion
@@ -258,100 +214,67 @@ namespace PumpAutomation
                 }
             }
 
+
+            /// <summary>
+            /// Test method not for release
+            /// </summary>
+            /// <param name=""></param>
+            /// <param name=""></param>
+            /// <returns></returns>
             public void test()
             {
-              //  _modbusControl.test(); 
-                //int PrefSpeed = _modbusControl.PreformanceTimeMs;
+
             }
 
             #region PLC Read
 
-            #region Coils
-
-
             /// <summary>
-            /// Read Bool status of single coil by ushort address
+            /// Read Al Coil data from Modbus register
             /// </summary>
-            /// <param name="adresse"></param>
             /// <returns></returns>
-            public bool GetCoilStatus(ushort address)
+            private void ReadAllCoils()
             {
-               // return _modbusControl.GetCoilStatus(address);
-                return false;
-            }
-
-            /// <summary>
-            /// Read Bool status of range of coil`s 
-            /// </summary>
-            /// <param name="adresse">This is the start adress of the coils</param>
-            /// <param name="Coils">Bool Array to hold the coils </param>
-            /// <returns></returns>
-            public bool GetCoils(ushort address , ref bool[] Coils)
-            {
-                /*
-                if (_modbusControl.GetCoils(address, ref Coils))
-                {
-                    return true;
-                }
-                 */ 
-                return false;
-            }
-
-            #endregion // Coils
-
-            #region Holding registers
-
-
-            /// <summary>
-            /// Read Word 16bit from ushort address
-            /// </summary>
-            /// <param name="Vtype"></param>
-            /// <returns></returns>
-            public short ReadWordValue(PumpAutomation.PLC.VPlcVariable Vtype)
-            {
-                    short[] VMemValue = new short[1];
-                    
-                    ushort addess = (PlcCovnertions.GetVariableAddresse(Vtype, false));
-
-                   // VMemValue[0] = _modbusControl.ReadWordValue(addess);
-
-                    return VMemValue[0];
-            }
-            
-            public short ReadWordValue(PumpAutomation.PLC.VPlcTime Vtype)
-            {
-                short[] VMemValue = new short[1];
-         
-                ushort addess = (PlcCovnertions.GetVariableAddresse(Vtype));
-
-              //  VMemValue[0] = _modbusControl.ReadWordValue(addess);
-
-                return VMemValue[0];
+                _PlcVariables._MBPump1Start = _modbusControl.CoilsData[(int)CPlcVariableDoMore.MBPump1Start];
+                _PlcVariables._MBPump1On = _modbusControl.CoilsData[(int)CPlcVariableDoMore.MBPump1On];
+                _PlcVariables._MBSimulationMode = _modbusControl.CoilsData[(int)CPlcVariableDoMore.MBSimulationMode];
+                _PlcVariables._MBWatchDog = _modbusControl.CoilsData[(int)CPlcVariableDoMore.MBWatchDog];
+                _PlcVariables._MBIsAlive = _modbusControl.CoilsData[(int)CPlcVariableDoMore.MBIsAlive];
             }
 
             /// <summary>
-            /// Read Word 16bit from ushort address
+            /// Read register data from Modbus register
             /// </summary>
-            /// <param name="address"> Start address</param>
-            /// <param name="Registers">How Many registers to read</param>
             /// <returns></returns>
-            public bool ReadWordValueS(ushort address, ushort quantity , ref short[] Registers)
+            private void ReadAllVMemories()
+            {/*
+                _PlcVariables.MBFlow1 = _modbusControl.RegisterData[(int)VPlcVariable.MBFlow1];
+                _PlcVariables.MBPressure1 = _modbusControl.RegisterData[(int)VPlcVariable.MBPressure1];
+                _PlcVariables.MB_T_Filter1 = _modbusControl.RegisterData[(int)VPlcVariable.MB_T_Filter1];
+                _PlcVariables.MBConSens4 = _modbusControl.RegisterData[(int)VPlcVariable.MBConSens4];
+                _PlcVariables.MBConSens6 = _modbusControl.RegisterData[(int)VPlcVariable.MBConSens6];
+                _PlcVariables.MBConSens14 = _modbusControl.RegisterData[(int)VPlcVariable.MBConSens14];
+                _PlcVariables.MBConSens21 = _modbusControl.RegisterData[(int)VPlcVariable.MBConSens21];
+                _PlcVariables.MBConSensStaus = _modbusControl.RegisterData[(int)VPlcVariable.MBConSensStaus];
+                _PlcVariables.MBConSensmA = _modbusControl.RegisterData[(int)VPlcVariable.MBConSensmA];
+                _PlcVariables.MBFlow2 = _modbusControl.RegisterData[(int)VPlcVariable.MBFlow2];
+                _PlcVariables.MBPressure2 = _modbusControl.RegisterData[(int)VPlcVariable.MBPressure2];
+                _PlcVariables.MBWaterContent = _modbusControl.RegisterData[(int)VPlcVariable.MBWaterContent];
+                _PlcVariables.MBOilTemp = _modbusControl.RegisterData[(int)VPlcVariable.MBOilTemp];
+                _PlcVariables.MB_T_Filter2 = _modbusControl.RegisterData[(int)VPlcVariable.MB_TFilter2];
+                _PlcVariables.MBRFilter = _modbusControl.RegisterData[(int)VPlcVariable.MBRFilter];
+            */}
+           
+            /// <summary>
+            /// Read plc time data from Modbus register
+            /// </summary>
+            /// <returns></returns>
+            private void ReadPlcTime()
             {
-
-                bool _bStatus = false;//_modbusControl.ReadWordValueS(address, quantity, ref Registers);
-
-                if (_bStatus)
-                {
-                    return true;
-                }
-                else
-                {
-                   // SingletonLogger.AddToLog(_modbusControl.modbusControlSerial.GetLastErrorString() + _Protocol, LogType.Error, LogModule.COM);
-                }
-                return false;
+                _PlcVariables.PlcTime = "PLC Time " +
+                                        _modbusControl.RegisterData[(int)VPlcTime.PlcHour].ToString() + ":" +
+                                        _modbusControl.RegisterData[(int)VPlcTime.PLCMin].ToString() + ":" +
+                                        _modbusControl.RegisterData[(int)VPlcTime.PLCSecond].ToString();
             }
-
-            #endregion // Holding registers
 
             #endregion // PLC Read
 
@@ -461,9 +384,13 @@ namespace PumpAutomation
 
         public string Status { get { return _Status; } }
 
+        // This it the modbus utdate preformance in milliseconds
         public int ModbusPreformance { get { return _modbusControl.PreformanceTimeMs; } }
 
+        
         public BitArray ModbusCoilArray { get { return _modbusControl.CoilsData; } }
+
+        public Int16[] ModbusRegisterArray { get { return _modbusControl.RegisterData; } }
 
         public bool IsPlcConnected 
         {

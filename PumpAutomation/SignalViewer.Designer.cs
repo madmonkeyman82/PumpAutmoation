@@ -43,6 +43,10 @@
             this.dataGridViewCoils = new System.Windows.Forms.DataGridView();
             this.Column_Coil = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column_Coil_status = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tabP_Registers = new System.Windows.Forms.TabPage();
+            this.dataGridView_registers = new System.Windows.Forms.DataGridView();
+            this.Column_RegID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column_RegStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox6.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tabC_SigViewer.SuspendLayout();
@@ -50,6 +54,8 @@
             this.tabPCore.SuspendLayout();
             this.tabP_Coils.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewCoils)).BeginInit();
+            this.tabP_Registers.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_registers)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox6
@@ -103,6 +109,7 @@
             this.tabC_SigViewer.Controls.Add(this.tabPContSens);
             this.tabC_SigViewer.Controls.Add(this.tabPCore);
             this.tabC_SigViewer.Controls.Add(this.tabP_Coils);
+            this.tabC_SigViewer.Controls.Add(this.tabP_Registers);
             resources.ApplyResources(this.tabC_SigViewer, "tabC_SigViewer");
             this.tabC_SigViewer.Name = "tabC_SigViewer";
             this.tabC_SigViewer.SelectedIndex = 0;
@@ -152,6 +159,37 @@
             this.Column_Coil_status.Name = "Column_Coil_status";
             this.Column_Coil_status.ReadOnly = true;
             // 
+            // tabP_Registers
+            // 
+            this.tabP_Registers.BackColor = System.Drawing.SystemColors.ActiveBorder;
+            this.tabP_Registers.Controls.Add(this.dataGridView_registers);
+            resources.ApplyResources(this.tabP_Registers, "tabP_Registers");
+            this.tabP_Registers.Name = "tabP_Registers";
+            // 
+            // dataGridView_registers
+            // 
+            this.dataGridView_registers.AllowUserToAddRows = false;
+            this.dataGridView_registers.AllowUserToDeleteRows = false;
+            this.dataGridView_registers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView_registers.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Column_RegID,
+            this.Column_RegStatus});
+            resources.ApplyResources(this.dataGridView_registers, "dataGridView_registers");
+            this.dataGridView_registers.Name = "dataGridView_registers";
+            this.dataGridView_registers.ReadOnly = true;
+            // 
+            // Column_RegID
+            // 
+            resources.ApplyResources(this.Column_RegID, "Column_RegID");
+            this.Column_RegID.Name = "Column_RegID";
+            this.Column_RegID.ReadOnly = true;
+            // 
+            // Column_RegStatus
+            // 
+            resources.ApplyResources(this.Column_RegStatus, "Column_RegStatus");
+            this.Column_RegStatus.Name = "Column_RegStatus";
+            this.Column_RegStatus.ReadOnly = true;
+            // 
             // SignalViewer
             // 
             resources.ApplyResources(this, "$this");
@@ -175,6 +213,8 @@
             this.tabPCore.ResumeLayout(false);
             this.tabP_Coils.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewCoils)).EndInit();
+            this.tabP_Registers.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_registers)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -195,5 +235,9 @@
         private System.Windows.Forms.DataGridView dataGridViewCoils;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column_Coil;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column_Coil_status;
+        private System.Windows.Forms.TabPage tabP_Registers;
+        private System.Windows.Forms.DataGridView dataGridView_registers;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column_RegID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column_RegStatus;
     }
 }

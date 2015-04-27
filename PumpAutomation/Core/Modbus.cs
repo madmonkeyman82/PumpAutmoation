@@ -64,6 +64,7 @@ namespace PumpAutomation
             _tThreadUpdateModbus.Start();
 
            Connect(); // just for testing Modbus- 
+
         }
 
         private void ThreadUpdateModbus()
@@ -72,7 +73,7 @@ namespace PumpAutomation
             {
                 int PrefCounter = 0;
 
-                while (_IsConnected)
+                while (IsConnected)
                 {
                     int MsNow = DateTime.Now.Millisecond;
 
@@ -83,10 +84,10 @@ namespace PumpAutomation
                             ReadCoils();
                             ReadHoldRegister();
                         }
-                        catch (Exception)
+                        catch (Exception ex)
                         {
-                            
-                            throw;
+
+                            SingletonLogger.AddToLog("Error in modbus updatethread :" + ex.Message, LogType.Error, LogModule.COM);
                         }
                       
                     }
@@ -118,7 +119,7 @@ namespace PumpAutomation
         // ------------------------------------------------------------------------
         public bool Connect()
         {
-            if (!_IsConnected)
+            if (!IsConnected)
             {
                 try
                 {
@@ -190,8 +191,6 @@ namespace PumpAutomation
             //Buffer.BlockCopy(byteCoilRegisterTemp, 0, _CoilsData, 0, byteCoilRegisterTemp.Length);
         }
 
-
-
         // ------------------------------------------------------------------------
         // Read holding register
         // ------------------------------------------------------------------------
@@ -213,21 +212,23 @@ namespace PumpAutomation
             byte[] byteHoldingRegisterTemp = new byte[99];
             
             //0 - 99
-            MBmaster.ReadHoldingRegister(ID, UNIT, (ushort)0, (ushort)99, ref byteHoldingRegisterTemp);
-            Buffer.BlockCopy(byteHoldingRegisterTemp, 0, _RegisterData, 0, byteHoldingRegisterTemp.Length);
-
+            MBmaster.ReadHoldingRegister(ID, UNIT, (ushort)1, (ushort)99, ref byteHoldingRegisterTemp);
+            //Buffer.BlockCopy(byteHoldingRegisterTemp, 0, _RegisterData, 1, byteHoldingRegisterTemp.Length);
+            Shiftbyts(byteHoldingRegisterTemp, 0);
+            int a = 0;
+            /*
             //100 - 199
-            MBmaster.ReadHoldingRegister(ID, UNIT, (ushort)100, (ushort)99, ref byteHoldingRegisterTemp);
-            Buffer.BlockCopy(byteHoldingRegisterTemp, 0, _RegisterData, 199, byteHoldingRegisterTemp.Length);
+            MBmaster.ReadHoldingRegister(ID, UNIT, (ushort)129, (ushort)128, ref byteHoldingRegisterTemp);
+            Buffer.BlockCopy(byteHoldingRegisterTemp, 0, _RegisterData, 129, byteHoldingRegisterTemp.Length);
 
             //200 - 299
-            MBmaster.ReadHoldingRegister(ID, UNIT, (ushort)200, (ushort)99, ref byteHoldingRegisterTemp);
-            Buffer.BlockCopy(byteHoldingRegisterTemp, 0, _RegisterData, 399, byteHoldingRegisterTemp.Length);
+            MBmaster.ReadHoldingRegister(ID, UNIT, (ushort)256, (ushort)128, ref byteHoldingRegisterTemp);
+            Buffer.BlockCopy(byteHoldingRegisterTemp, 0, _RegisterData, 256, byteHoldingRegisterTemp.Length);
 
             //300 - 399
-            MBmaster.ReadHoldingRegister(ID, UNIT, (ushort)300, (ushort)99, ref byteHoldingRegisterTemp);
-            Buffer.BlockCopy(byteHoldingRegisterTemp, 0, _RegisterData, 598, byteHoldingRegisterTemp.Length);
-
+            MBmaster.ReadHoldingRegister(ID, UNIT, (ushort)384, (ushort)128, ref byteHoldingRegisterTemp);
+            Buffer.BlockCopy(byteHoldingRegisterTemp, 0, _RegisterData, 384, byteHoldingRegisterTemp.Length);
+*/
             //Check preformnace end
             //TimeSpan performanceTime = (DateTime.Now - timeStart);
         }
@@ -256,6 +257,17 @@ namespace PumpAutomation
        * */
         #endregion
 
+        private void Shiftbyts(byte[] byteHoldingRegisterTemp, int offsett)
+        {
+            for (int i = 0; i < byteHoldingRegisterTemp.Length; i++)
+            {
+                _RegisterData[i+offsett] = BitConverter.ToInt16(new byte[2] { (byte)byteHoldingRegisterTemp[i + 1], (byte)byteHoldingRegisterTemp[i]}, 0);
+            }
+ 
+            //int tull = _RegisterData.Length;
+
+           // test = BitConverter.ToInt16(new byte[2] { (byte)byteHoldingRegisterTemp[1], (byte)byteHoldingRegisterTemp[0] }, 0);
+        }
 
         #region OnResponse
 
@@ -384,13 +396,27 @@ namespace PumpAutomation
         // ------------------------------------------------------------------------
         // Modbus TCP Connection status
         // ------------------------------------------------------------------------
-        private bool _IsConnected;
+        private bool _IsConnected = false;
         public bool IsConnected
         {
             get
             {
+                if (MBmaster == null)
+                {
+                    return false;   
+                }
+                else
+                {
+                    if (MBmaster.connected && _IsConnected)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
 
-                return _IsConnected;
             }
 
         }
@@ -438,8 +464,21 @@ namespace PumpAutomation
         {
             get
             {
+                /*
+                 Int16[] _RegisterDataTemp = new ushort[2048];
+
+                for (int i = 0; i < _RegisterData.Length-1; i++)
+                {
+                    _RegisterDataTemp[i + 1] = _RegisterData[i];
+                }
+
+                _RegisterDataTemp[0] = 0;
+
+                return _RegisterDataTemp;
+                 * */
                 return _RegisterData;
             }
+                 
         }
 
         #endregion

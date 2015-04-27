@@ -18,6 +18,7 @@ namespace PumpAutomation
         //public delegate void GUIDelegate(string paramString, DateTime datetime);
         public delegate void GUIDelegate(Control control, string text );
         public delegate void GUIDelegateCoils(BitArray coils);
+        public delegate void GUIDelegateRegister(Int16[] Register);
         #endregion
 
         private Core SingletonPls = Core.Instance;
@@ -29,6 +30,7 @@ namespace PumpAutomation
         {
             InitializeComponent();
             dataGridViewCoils.Rows.Add(1024);
+            dataGridView_registers.Rows.Add(2048);
             SetupTimer();
            
         }
@@ -65,6 +67,10 @@ namespace PumpAutomation
             {
                 DoGUIUpdateCoils(SingletonPls.ModbusCoilArray);
             }
+            else if (tabC_SigViewer.SelectedTab == tabC_SigViewer.TabPages["tabP_Registers"])
+            {
+                DoGUIUpdateRegisters(SingletonPls.ModbusRegisterArray);
+            }
 
         }
 
@@ -99,6 +105,24 @@ namespace PumpAutomation
                     //dataGridViewCoils.Rows.Add(row);
  
                         dataGridViewCoils.Rows[i].SetValues(i.ToString(), coils[i].ToString());          
+                }
+            }
+        }
+
+        public void DoGUIUpdateRegisters(Int16[] registers)
+        {
+            if (this.InvokeRequired)
+            {
+                GUIDelegateRegister delegateMethod = new GUIDelegateRegister(this.DoGUIUpdateRegisters);
+                this.Invoke(delegateMethod, new object[] { registers });
+            }
+            else
+            {
+                int l = registers.Length;
+
+                for (int i = 0; i < l; i++)
+                {
+                    dataGridView_registers.Rows[i].SetValues(i.ToString(), registers[i].ToString());
                 }
             }
         }

@@ -211,7 +211,7 @@ namespace PumpAutomation
                     if (SingletonCore.ConnectToPlc())
                     {
                         // Wait for plc variable update
-                        Thread.Sleep(50);
+                        Thread.Sleep(100);
                         if (SingletonCore.IsPlcConnected)
                         {
                             kobleTilPLSToolStripMenuItem.Text = "Koble fra";
