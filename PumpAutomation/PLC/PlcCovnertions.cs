@@ -28,7 +28,7 @@ namespace PumpAutomation.PLC
                 int _decValue = (int)_ContactVariable;
 
                 int firstlvalue;
-               firstlvalue = _decValue + (int)MemoryTypeDoMore.ControlRelaysC - 1;
+               firstlvalue = _decValue + (int)MemoryTypeDoMore.ControlRelaysC;
                // firstlvalue = _decValue + (int)MemoryTypeDoMore.ControlRelaysC;
 
                 ushort secondvalue = (ushort)firstlvalue;

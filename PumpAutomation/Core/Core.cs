@@ -246,7 +246,7 @@ namespace PumpAutomation
             /// </summary>
             /// <returns></returns>
             private void ReadAllVMemories()
-            {/*
+            {
                 _PlcVariables.MBFlow1 = _modbusControl.RegisterData[(int)VPlcVariable.MBFlow1];
                 _PlcVariables.MBPressure1 = _modbusControl.RegisterData[(int)VPlcVariable.MBPressure1];
                 _PlcVariables.MB_T_Filter1 = _modbusControl.RegisterData[(int)VPlcVariable.MB_T_Filter1];
@@ -262,7 +262,7 @@ namespace PumpAutomation
                 _PlcVariables.MBOilTemp = _modbusControl.RegisterData[(int)VPlcVariable.MBOilTemp];
                 _PlcVariables.MB_T_Filter2 = _modbusControl.RegisterData[(int)VPlcVariable.MB_TFilter2];
                 _PlcVariables.MBRFilter = _modbusControl.RegisterData[(int)VPlcVariable.MBRFilter];
-            */}
+            }
            
             /// <summary>
             /// Read plc time data from Modbus register
@@ -317,7 +317,8 @@ namespace PumpAutomation
                 bool _Status = false;
 
                 _Status = false; //_modbusControl.WriteToCoil(address, NewCoilStatus);
-               // _Status = modbusControlSerial.WriteSingleCoilFC5(1, address, NewCoilStatus);
+               //_Status = modbusControlSerial.WriteSingleCoilFC5(1, address, NewCoilStatus);
+                _Status = _modbusControl.WriteCoil(address, NewCoilStatus);
 
                 if (_Status)
                 {

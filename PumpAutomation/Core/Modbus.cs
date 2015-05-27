@@ -16,11 +16,18 @@ namespace PumpAutomation
 
         #region Constructor / Deconstructor
 
+        // ------------------------------------------------------------------------
+        // Constructor
+        // ------------------------------------------------------------------------
         public Modbus()
         {
             StartUpdateModbus();
         }
 
+
+        // ------------------------------------------------------------------------
+        // Deconstructor
+        // ------------------------------------------------------------------------
         ~Modbus()
         {
             _IsClosing = true;
@@ -42,7 +49,6 @@ namespace PumpAutomation
         //Modbus Commnunication class
         private ModbusTCP.Master MBmaster;
 
-
         // Logger Variable
         private Logger SingletonLogger = Logger.Instance;
 
@@ -56,6 +62,9 @@ namespace PumpAutomation
 
         #region Thread
 
+        // ------------------------------------------------------------------------
+        // Methode used initziate new worker thread
+        // ------------------------------------------------------------------------
         private void StartUpdateModbus()
         {
             _tThreadUpdateModbus = new Thread(new ThreadStart(this.ThreadUpdateModbus));
@@ -63,10 +72,18 @@ namespace PumpAutomation
             _tThreadUpdateModbus.Name = "MODBUS UPDATE THREAD";
             _tThreadUpdateModbus.Start();
 
-           Connect(); // just for testing Modbus- 
+            /* Debug
+          // Connect(); // just for testing Modbus- 
 
+          // Thread.Sleep(10);
+
+          // WriteCoil((ushort)10, true);
+            */
         }
 
+        // ------------------------------------------------------------------------
+        // Methode used for worker thread
+        // ------------------------------------------------------------------------
         private void ThreadUpdateModbus()
         {
             while (!_IsClosing) 
@@ -86,10 +103,8 @@ namespace PumpAutomation
                         }
                         catch (Exception ex)
                         {
-
                             SingletonLogger.AddToLog("Error in modbus updatethread :" + ex.Message, LogType.Error, LogModule.COM);
-                        }
-                      
+                        }         
                     }
                     else
                     {
@@ -110,7 +125,6 @@ namespace PumpAutomation
         }
 
         #endregion  
-
         
         #region Modbus General
 
@@ -198,76 +212,116 @@ namespace PumpAutomation
         {
             ushort ID = 3;
             byte UNIT = 0;
-            
+
+            byte[] byteHoldingRegisterTemp1 = new byte[100];
+            byte[] byteBigHoldingReisterTemp = new byte[4096];
             //-------
             //Read all Holding Registers in sequence and block copy in to int16 register
-            //0 - 99 
-            //100 - 199
-            //200 - 299
-            //300 - 300
 
-            //Check preformance timestamp
-          //  DateTime timeStart = DateTime.Now;
-
-            byte[] byteHoldingRegisterTemp = new byte[99];
-            
             //0 - 99
-            MBmaster.ReadHoldingRegister(ID, UNIT, (ushort)1, (ushort)99, ref byteHoldingRegisterTemp);
-            //Buffer.BlockCopy(byteHoldingRegisterTemp, 0, _RegisterData, 1, byteHoldingRegisterTemp.Length);
-            Shiftbyts(byteHoldingRegisterTemp, 0);
-            int a = 0;
-            /*
-            //100 - 199
-            MBmaster.ReadHoldingRegister(ID, UNIT, (ushort)129, (ushort)128, ref byteHoldingRegisterTemp);
-            Buffer.BlockCopy(byteHoldingRegisterTemp, 0, _RegisterData, 129, byteHoldingRegisterTemp.Length);
+            MBmaster.ReadHoldingRegister(ID, UNIT, (ushort)0, (ushort)100, ref byteHoldingRegisterTemp1);
+            Buffer.BlockCopy(byteHoldingRegisterTemp1, 0, byteBigHoldingReisterTemp, 0, byteHoldingRegisterTemp1.Length);
 
-            //200 - 299
-            MBmaster.ReadHoldingRegister(ID, UNIT, (ushort)256, (ushort)128, ref byteHoldingRegisterTemp);
-            Buffer.BlockCopy(byteHoldingRegisterTemp, 0, _RegisterData, 256, byteHoldingRegisterTemp.Length);
+            //100 - 200
+            MBmaster.ReadHoldingRegister(ID, UNIT, (ushort)100, (ushort)100, ref byteHoldingRegisterTemp1);
+            Buffer.BlockCopy(byteHoldingRegisterTemp1, 0, byteBigHoldingReisterTemp, 200, byteHoldingRegisterTemp1.Length);
+           
+            //200 - 300
+            MBmaster.ReadHoldingRegister(ID, UNIT, (ushort)200, (ushort)100, ref byteHoldingRegisterTemp1);
+            Buffer.BlockCopy(byteHoldingRegisterTemp1, 0, byteBigHoldingReisterTemp, 400, byteHoldingRegisterTemp1.Length);
 
-            //300 - 399
-            MBmaster.ReadHoldingRegister(ID, UNIT, (ushort)384, (ushort)128, ref byteHoldingRegisterTemp);
-            Buffer.BlockCopy(byteHoldingRegisterTemp, 0, _RegisterData, 384, byteHoldingRegisterTemp.Length);
-*/
-            //Check preformnace end
-            //TimeSpan performanceTime = (DateTime.Now - timeStart);
+            //300 - 400
+            MBmaster.ReadHoldingRegister(ID, UNIT, (ushort)300, (ushort)100, ref byteHoldingRegisterTemp1);
+            Buffer.BlockCopy(byteHoldingRegisterTemp1, 0, byteBigHoldingReisterTemp, 600, byteHoldingRegisterTemp1.Length);
+        
+            // Swap littlendian -> bigendian ??
+            SwapRegisterByteArray(byteBigHoldingReisterTemp, 1);
         }
 
-        // ------------------------------------------------------------------------
-        // Read start address
-        // ------------------------------------------------------------------------
-      /*
-        private ushort ReadStartAdr()
-        {
 
-            
-            // Convert hex numbers into decimal
-            if (txtStartAdress.Text.IndexOf("0x", 0, txtStartAdress.Text.Length) == 0)
-            {
-                string str = txtStartAdress.Text.Replace("0x", "");
-                ushort hex = Convert.ToUInt16(str, 16);
-                return hex;
-            }
-            else
-            {
-                return Convert.ToUInt16(txtStartAdress.Text);
-            }
-             
-        }
-       * */
         #endregion
 
-        private void Shiftbyts(byte[] byteHoldingRegisterTemp, int offsett)
-        {
-            for (int i = 0; i < byteHoldingRegisterTemp.Length; i++)
-            {
-                _RegisterData[i+offsett] = BitConverter.ToInt16(new byte[2] { (byte)byteHoldingRegisterTemp[i + 1], (byte)byteHoldingRegisterTemp[i]}, 0);
-            }
- 
-            //int tull = _RegisterData.Length;
+        #region Modbus Write
 
-           // test = BitConverter.ToInt16(new byte[2] { (byte)byteHoldingRegisterTemp[1], (byte)byteHoldingRegisterTemp[0] }, 0);
+        /// <summary>
+        // ------------------------------------------------------------------------
+        // Write a single bit to Coil address
+        // ------------------------------------------------------------------------
+        /// <param name="address">Coil number to set 1 - 1024</param>
+        /// <param name="status">True or False</param>
+        /// <returns>IP port of plc</returns>
+        /// </summary>
+        public bool WriteCoil(ushort address, bool status)
+        {
+            ushort ID = 1;
+            byte UNIT = 0;
+            byte[] _NewStatus = new byte[1];
+
+            if (status == true)
+            {
+                 _NewStatus[0] = 1 ;
+            }
+            else if (status == false)
+            {
+                 _NewStatus[0] = 0 ;
+            }
+
+
+            ushort _address = Convert.ToUInt16((int)address - 1);
+
+            bool success = false;
+            byte[] ReturnStatus = new byte[1];
+
+
+            MBmaster.WriteMultipleCoils(ID, UNIT, _address, (ushort)1, _NewStatus, ref ReturnStatus);
+
+            if (ReturnStatus[1] == 1)
+            {
+                success = true;
+            }
+            return success;
         }
+
+        #endregion
+
+        #region Tools
+
+        private void SwapRegisterByteArray(byte[] byteArray, int offsett)
+        {
+            try
+            {
+                if (byteArray.Length % 2 == 0 && byteArray.Length <= 4096 && offsett <= _RegisterData.Length)
+                {
+                    //byte[] arrbyteTemp = new byte[byteArray.Length];
+                    int _iRegWordCounter = offsett;
+
+
+                    for (int i = 0; i < byteArray.Length; i++)
+                    {
+                        _RegisterData[_iRegWordCounter] = BitConverter.ToInt16(new byte[2] { (byte)byteArray[i + 1], (byte)byteArray[i] }, 0);
+
+                        i = i + 1;
+                        _iRegWordCounter++;
+
+                        if (i > (byteArray.Length / 2) | _iRegWordCounter > _RegisterData.Length)
+                        {
+                            break;
+                        }
+                    }
+                }
+                else
+                {
+
+                }
+            }
+            catch (Exception ex)
+            {
+                SingletonLogger.AddToLog("Error in modbus \"SwapRegisterByteArray\" :" + ex.Message, LogType.Error, LogModule.COM);
+            }
+
+        }
+
+        #endregion
 
         #region OnResponse
 
@@ -356,9 +410,13 @@ namespace PumpAutomation
 
         #region Get / Set
 
+
+        /// <summary>
         // ------------------------------------------------------------------------
         // Modbus TCP Connection Ip address
         // ------------------------------------------------------------------------
+        /// </summary>
+        /// <returns>IP address of plc</returns>
         private string _MoudbusIPAddress = "192.168.1.23";
         public string MoudbusIPAddress
         {
@@ -374,10 +432,12 @@ namespace PumpAutomation
 
         }
 
-
+        /// <summary>
         // ------------------------------------------------------------------------
         // Modbus TCP Connection port
         // ------------------------------------------------------------------------
+        /// </summary>
+        /// <returns>IP port of plc</returns>
         private ushort _MoudbusPort = 502;
         public ushort MoudbusPort
         {
@@ -393,9 +453,12 @@ namespace PumpAutomation
 
         }
 
+        /// <summary>
         // ------------------------------------------------------------------------
         // Modbus TCP Connection status
         // ------------------------------------------------------------------------
+        /// </summary>
+        /// <returns>Status of TCP connection to plc</returns>
         private bool _IsConnected = false;
         public bool IsConnected
         {
@@ -421,9 +484,12 @@ namespace PumpAutomation
 
         }
 
+        /// <summary>
         // ------------------------------------------------------------------------
         // Preformence info update thread Returns ms time 
         // ------------------------------------------------------------------------
+        /// </summary>
+        /// <returns>Modbus preformancetime </returns>
         private int[] _PreformanceTimeMs = new int[50];
         public int PreformanceTimeMs
         {
@@ -433,10 +499,12 @@ namespace PumpAutomation
             }
         }
 
-
+        /// <summary>
         // ------------------------------------------------------------------------
         // Data object with all plc coil`s
         // ------------------------------------------------------------------------
+        /// </summary>
+        /// <returns>All coils</returns>
         private BitArray _CoilsData = new BitArray(1024); // 1024 bits in MC0-1023
         public BitArray CoilsData
         {
@@ -445,40 +513,36 @@ namespace PumpAutomation
                      //... bitArray is the BitArray instance
                     
                 BitArray _CoilsDataTemp = new BitArray(1024);
-
-                    for (int i = 0; i < _CoilsData.Count-1; i++)
+                if (_CoilsData != null)
+                {
+                    for (int i = 0; i < _CoilsData.Count - 1; i++)
                     {
-                       _CoilsDataTemp[i+1] = _CoilsData[i];
-                    }
+                        _CoilsDataTemp[i + 1] = _CoilsData[i];
 
+                        if (i >= 1023)
+                        {
+                            break;
+                        }
+                    }
+                }
                     _CoilsDataTemp[0] = false; // or true, whatever you want to shift in
                     return _CoilsDataTemp;
             }
         }
 
+        /// <summary>
         // ------------------------------------------------------------------------
-        // Data object with all plc coil`s
+        // Data object with plc HoldingRegisters`s from 1 - 400
         // ------------------------------------------------------------------------
+        /// </summary>
+        /// <returns>HoldingRegisters 0 - 400</returns>
         private Int16[] _RegisterData = new Int16[2048]; // 2048 word signed 16-bit in MHR0-2048
         public Int16[] RegisterData
         {
             get
             {
-                /*
-                 Int16[] _RegisterDataTemp = new ushort[2048];
-
-                for (int i = 0; i < _RegisterData.Length-1; i++)
-                {
-                    _RegisterDataTemp[i + 1] = _RegisterData[i];
-                }
-
-                _RegisterDataTemp[0] = 0;
-
-                return _RegisterDataTemp;
-                 * */
-                return _RegisterData;
-            }
-                 
+                 return _RegisterData;
+            }          
         }
 
         #endregion
