@@ -21,11 +21,11 @@ namespace PumpAutomation
         // GUI 
         const int GaugeFlowXpos = 5;
         const int GaugeFlowYpos = 10;
-        const int GaugeFlowDiameter = 250;
+        const int GaugeFlowDiameter = 220;
 
         const int GaugePressureXpos = GaugeFlowDiameter + GaugeFlowXpos + 8;
         const int GaugePressureYpos = GaugeFlowYpos;
-        const int GaugePressureDiameter = 165;
+        const int GaugePressureDiameter = 130;
 
         const int GaugeRegXpos = 5;
         const int GaugeRegYpos = 5;
