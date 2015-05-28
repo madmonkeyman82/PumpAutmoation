@@ -19,17 +19,17 @@ namespace PumpAutomation
 
 
         // GUI 
-        const int GaugeFlowXpos = 5;
+        const int GaugeFlowXpos = 4;
         const int GaugeFlowYpos = 10;
-        const int GaugeFlowDiameter = 220;
+        const int GaugeFlowDiameter = 240;
 
-        const int GaugePressureXpos = GaugeFlowDiameter + GaugeFlowXpos + 8;
+        const int GaugePressureXpos = GaugeFlowDiameter + GaugeFlowXpos + 6;
         const int GaugePressureYpos = GaugeFlowYpos;
-        const int GaugePressureDiameter = 130;
+        const int GaugePressureDiameter = 150;
 
         const int GaugeRegXpos = 5;
         const int GaugeRegYpos = 5;
-        const int GaugeRegXWidth = 420;
+        const int GaugeRegXWidth = 395;
         const int GaugeRegXHeight = 70;
 
         const int RegSPSendDealyMs = 300;
@@ -365,7 +365,7 @@ namespace PumpAutomation
             bar1.MinorTicknumber = 2;
             bar1.CustomLabel = new string[] { "<15", "30", "60", "90", "120", "150", "180", "210", "240", "270", "300" };
 
-            bar1.TickLabel.LabelFont = new Font("Elephant", 12, FontStyle.Bold);
+            bar1.TickLabel.LabelFont = new Font("Elephant", 9, FontStyle.Bold);
             bar1.TickLabel.TextDirection = CircularLabel.Direction.Horizontal;
             bar1.TickLabel.OffsetFromScale = 15;
 
@@ -380,6 +380,7 @@ namespace PumpAutomation
             pointer.CapPointer.FillColor = Color.DarkSlateBlue;
             pointer.BasePointer.OffsetFromCenter = -20;
             pointer.BasePointer.FillColor = Color.DarkRed;
+            pointer.CapPointer.Diameter = 20;
 
             // Danger zone marking
             CircularRange range1 = new CircularRange(f1);
@@ -405,7 +406,7 @@ namespace PumpAutomation
 
 
             // Pumpe Label
-            GaugeLable(f1, new Point(f1.Rect.Width / 2 - 18, f1.Rect.Height / 2 - 40), "Bar", 20);
+            GaugeLable(f1, new Point(f1.Rect.Width / 2 - 14, f1.Rect.Height / 2 - 25), "Bar", 15);
 
 
             // Tess Label
@@ -430,7 +431,7 @@ namespace PumpAutomation
             bar1.MajorTickNumber = 9;
             bar1.MinorTicknumber = 2;
 
-            bar1.TickLabel.LabelFont = new Font("Elephant", 9, FontStyle.Bold);
+            bar1.TickLabel.LabelFont = new Font("Elephant", 8, FontStyle.Bold);
             bar1.TickLabel.TextDirection = CircularLabel.Direction.Horizontal;
             bar1.TickLabel.OffsetFromScale = 15;
 
@@ -439,14 +440,13 @@ namespace PumpAutomation
 
             CircularPointer pointer = new CircularPointer(f1);
             pointer.BasePointer.PointerShapeType = Pointerbase.PointerType.Type1;
-            pointer.BasePointer.Width = 5;
-            pointer.BasePointer.Length = 65;
-            pointer.BasePointer.Shadow.Offset = 3;
+            pointer.BasePointer.Width = 2;
+            pointer.BasePointer.Length = 66;
+            pointer.BasePointer.Shadow.Offset = 2;
             pointer.CapPointer.FillColor = Color.DarkSlateBlue;
-            pointer.BasePointer.OffsetFromCenter = -20;
+            pointer.BasePointer.OffsetFromCenter = -10;
             pointer.BasePointer.FillColor = Color.DarkRed;
-
-
+            pointer.CapPointer.Diameter = 10;
             bar1.Pointer.Add(pointer);
 
             // Danger zone marking
@@ -468,7 +468,7 @@ namespace PumpAutomation
             f1.FrameLabelCollection.Add(lb);
             lb.LabelText = "TESS";
             lb.LabelFont = new Font(FontFamily.GenericSerif,
-                                     20,
+                                     15,
                 /* FontStyle.Italic |*/ FontStyle.Bold
                                      );
             lb.FontColor = Color.Black;
@@ -482,7 +482,7 @@ namespace PumpAutomation
             FrameLabel lb = new FrameLabel(point, f1);
             f1.FrameLabelCollection.Add(lb);
             lb.LabelText = text;
-            lb.LabelFont = new Font(FontFamily.GenericSerif, 20, /* FontStyle.Italic |*/ FontStyle.Bold);
+            lb.LabelFont = new Font(FontFamily.GenericSerif, 15, /* FontStyle.Italic |*/ FontStyle.Bold);
             lb.FontColor = Color.Black;
             lb.Shadow.Offset = 1;
 

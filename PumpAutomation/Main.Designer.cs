@@ -309,7 +309,7 @@
             this.baseUI_pump1.Location = new System.Drawing.Point(6, 23);
             this.baseUI_pump1.Margin = new System.Windows.Forms.Padding(2);
             this.baseUI_pump1.Name = "baseUI_pump1";
-            this.baseUI_pump1.Size = new System.Drawing.Size(386, 373);
+            this.baseUI_pump1.Size = new System.Drawing.Size(404, 373);
             this.baseUI_pump1.TabIndex = 0;
             // 
             // gb_pump1
@@ -338,7 +338,7 @@
             this.gb_pump1.Margin = new System.Windows.Forms.Padding(2);
             this.gb_pump1.Name = "gb_pump1";
             this.gb_pump1.Padding = new System.Windows.Forms.Padding(2);
-            this.gb_pump1.Size = new System.Drawing.Size(396, 730);
+            this.gb_pump1.Size = new System.Drawing.Size(414, 730);
             this.gb_pump1.TabIndex = 2;
             this.gb_pump1.TabStop = false;
             this.gb_pump1.Text = "Aggregat 1";
@@ -347,7 +347,7 @@
             // 
             this.txt_aggregat1_Flow.BackColor = System.Drawing.SystemColors.ActiveBorder;
             this.txt_aggregat1_Flow.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txt_aggregat1_Flow.Location = new System.Drawing.Point(80, 570);
+            this.txt_aggregat1_Flow.Location = new System.Drawing.Point(88, 570);
             this.txt_aggregat1_Flow.Margin = new System.Windows.Forms.Padding(2);
             this.txt_aggregat1_Flow.Name = "txt_aggregat1_Flow";
             this.txt_aggregat1_Flow.ReadOnly = true;
@@ -358,7 +358,7 @@
             // label29
             // 
             this.label29.AutoSize = true;
-            this.label29.Location = new System.Drawing.Point(118, 572);
+            this.label29.Location = new System.Drawing.Point(126, 572);
             this.label29.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label29.Name = "label29";
             this.label29.Size = new System.Drawing.Size(53, 22);
@@ -368,7 +368,7 @@
             // label30
             // 
             this.label30.AutoSize = true;
-            this.label30.Location = new System.Drawing.Point(74, 547);
+            this.label30.Location = new System.Drawing.Point(82, 547);
             this.label30.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label30.Name = "label30";
             this.label30.Size = new System.Drawing.Size(39, 22);
@@ -380,7 +380,7 @@
             // 
             this.txt_aggregat1_T1_Filter.BackColor = System.Drawing.SystemColors.ActiveBorder;
             this.txt_aggregat1_T1_Filter.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txt_aggregat1_T1_Filter.Location = new System.Drawing.Point(246, 570);
+            this.txt_aggregat1_T1_Filter.Location = new System.Drawing.Point(269, 570);
             this.txt_aggregat1_T1_Filter.Margin = new System.Windows.Forms.Padding(2);
             this.txt_aggregat1_T1_Filter.Name = "txt_aggregat1_T1_Filter";
             this.txt_aggregat1_T1_Filter.ReadOnly = true;
@@ -391,7 +391,7 @@
             // label28
             // 
             this.label28.AutoSize = true;
-            this.label28.Location = new System.Drawing.Point(284, 572);
+            this.label28.Location = new System.Drawing.Point(307, 572);
             this.label28.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label28.Name = "label28";
             this.label28.Size = new System.Drawing.Size(38, 22);
@@ -414,7 +414,7 @@
             // 
             this.txt_aggregat1_pressure.BackColor = System.Drawing.SystemColors.ActiveBorder;
             this.txt_aggregat1_pressure.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txt_aggregat1_pressure.Location = new System.Drawing.Point(168, 570);
+            this.txt_aggregat1_pressure.Location = new System.Drawing.Point(185, 570);
             this.txt_aggregat1_pressure.Margin = new System.Windows.Forms.Padding(2);
             this.txt_aggregat1_pressure.Name = "txt_aggregat1_pressure";
             this.txt_aggregat1_pressure.ReadOnly = true;
@@ -429,13 +429,13 @@
             this.baseUI2_pump1.Location = new System.Drawing.Point(4, 401);
             this.baseUI2_pump1.Margin = new System.Windows.Forms.Padding(2);
             this.baseUI2_pump1.Name = "baseUI2_pump1";
-            this.baseUI2_pump1.Size = new System.Drawing.Size(388, 76);
+            this.baseUI2_pump1.Size = new System.Drawing.Size(406, 76);
             this.baseUI2_pump1.TabIndex = 17;
             // 
             // label16
             // 
             this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(242, 547);
+            this.label16.Location = new System.Drawing.Point(265, 547);
             this.label16.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(67, 22);
@@ -465,7 +465,7 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(206, 572);
+            this.label10.Location = new System.Drawing.Point(223, 572);
             this.label10.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(38, 22);
@@ -475,7 +475,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(162, 547);
+            this.label9.Location = new System.Drawing.Point(179, 547);
             this.label9.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(55, 22);
@@ -487,10 +487,10 @@
             // 
             this.btn_aggregat1_Stop.BackColor = System.Drawing.Color.Red;
             this.btn_aggregat1_Stop.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_aggregat1_Stop.Location = new System.Drawing.Point(56, 685);
+            this.btn_aggregat1_Stop.Location = new System.Drawing.Point(119, 685);
             this.btn_aggregat1_Stop.Margin = new System.Windows.Forms.Padding(2);
             this.btn_aggregat1_Stop.Name = "btn_aggregat1_Stop";
-            this.btn_aggregat1_Stop.Size = new System.Drawing.Size(209, 33);
+            this.btn_aggregat1_Stop.Size = new System.Drawing.Size(161, 33);
             this.btn_aggregat1_Stop.TabIndex = 3;
             this.btn_aggregat1_Stop.Text = "Stopp";
             this.btn_aggregat1_Stop.UseVisualStyleBackColor = false;
@@ -500,10 +500,10 @@
             // 
             this.btn_aggregat1_standby.BackColor = System.Drawing.Color.DarkOrange;
             this.btn_aggregat1_standby.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_aggregat1_standby.Location = new System.Drawing.Point(56, 655);
+            this.btn_aggregat1_standby.Location = new System.Drawing.Point(119, 651);
             this.btn_aggregat1_standby.Margin = new System.Windows.Forms.Padding(2);
             this.btn_aggregat1_standby.Name = "btn_aggregat1_standby";
-            this.btn_aggregat1_standby.Size = new System.Drawing.Size(209, 25);
+            this.btn_aggregat1_standby.Size = new System.Drawing.Size(161, 33);
             this.btn_aggregat1_standby.TabIndex = 2;
             this.btn_aggregat1_standby.Text = "StandBy";
             this.btn_aggregat1_standby.UseVisualStyleBackColor = false;
@@ -513,10 +513,10 @@
             // 
             this.btn_aggregat1_start.BackColor = System.Drawing.Color.Green;
             this.btn_aggregat1_start.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_aggregat1_start.Location = new System.Drawing.Point(56, 617);
+            this.btn_aggregat1_start.Location = new System.Drawing.Point(119, 617);
             this.btn_aggregat1_start.Margin = new System.Windows.Forms.Padding(2);
             this.btn_aggregat1_start.Name = "btn_aggregat1_start";
-            this.btn_aggregat1_start.Size = new System.Drawing.Size(209, 33);
+            this.btn_aggregat1_start.Size = new System.Drawing.Size(161, 33);
             this.btn_aggregat1_start.TabIndex = 1;
             this.btn_aggregat1_start.Text = "Start";
             this.btn_aggregat1_start.UseVisualStyleBackColor = false;
@@ -543,11 +543,11 @@
             this.groupBox2.Controls.Add(this.label36);
             this.groupBox2.Controls.Add(this.label35);
             this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox2.Location = new System.Drawing.Point(827, 26);
+            this.groupBox2.Location = new System.Drawing.Point(839, 26);
             this.groupBox2.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Padding = new System.Windows.Forms.Padding(2);
-            this.groupBox2.Size = new System.Drawing.Size(396, 730);
+            this.groupBox2.Size = new System.Drawing.Size(414, 730);
             this.groupBox2.TabIndex = 3;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Aggregat 2";
@@ -556,7 +556,7 @@
             // 
             this.txt_aggregat2_Flow.BackColor = System.Drawing.SystemColors.ActiveBorder;
             this.txt_aggregat2_Flow.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txt_aggregat2_Flow.Location = new System.Drawing.Point(82, 570);
+            this.txt_aggregat2_Flow.Location = new System.Drawing.Point(91, 570);
             this.txt_aggregat2_Flow.Margin = new System.Windows.Forms.Padding(2);
             this.txt_aggregat2_Flow.Name = "txt_aggregat2_Flow";
             this.txt_aggregat2_Flow.ReadOnly = true;
@@ -571,13 +571,13 @@
             this.baseUI2_pump2.Location = new System.Drawing.Point(4, 401);
             this.baseUI2_pump2.Margin = new System.Windows.Forms.Padding(2);
             this.baseUI2_pump2.Name = "baseUI2_pump2";
-            this.baseUI2_pump2.Size = new System.Drawing.Size(388, 76);
+            this.baseUI2_pump2.Size = new System.Drawing.Size(406, 76);
             this.baseUI2_pump2.TabIndex = 18;
             // 
             // label31
             // 
             this.label31.AutoSize = true;
-            this.label31.Location = new System.Drawing.Point(120, 572);
+            this.label31.Location = new System.Drawing.Point(136, 572);
             this.label31.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label31.Name = "label31";
             this.label31.Size = new System.Drawing.Size(53, 22);
@@ -591,13 +591,13 @@
             this.baseUI_pump2.Location = new System.Drawing.Point(4, 23);
             this.baseUI_pump2.Margin = new System.Windows.Forms.Padding(2);
             this.baseUI_pump2.Name = "baseUI_pump2";
-            this.baseUI_pump2.Size = new System.Drawing.Size(388, 373);
+            this.baseUI_pump2.Size = new System.Drawing.Size(406, 373);
             this.baseUI_pump2.TabIndex = 2;
             // 
             // label32
             // 
             this.label32.AutoSize = true;
-            this.label32.Location = new System.Drawing.Point(76, 547);
+            this.label32.Location = new System.Drawing.Point(87, 547);
             this.label32.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label32.Name = "label32";
             this.label32.Size = new System.Drawing.Size(39, 22);
@@ -609,10 +609,10 @@
             // 
             this.btn_aggregat2_standby.BackColor = System.Drawing.Color.DarkOrange;
             this.btn_aggregat2_standby.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_aggregat2_standby.Location = new System.Drawing.Point(57, 655);
+            this.btn_aggregat2_standby.Location = new System.Drawing.Point(111, 651);
             this.btn_aggregat2_standby.Margin = new System.Windows.Forms.Padding(2);
             this.btn_aggregat2_standby.Name = "btn_aggregat2_standby";
-            this.btn_aggregat2_standby.Size = new System.Drawing.Size(209, 25);
+            this.btn_aggregat2_standby.Size = new System.Drawing.Size(161, 33);
             this.btn_aggregat2_standby.TabIndex = 49;
             this.btn_aggregat2_standby.Text = "StandBy";
             this.btn_aggregat2_standby.UseVisualStyleBackColor = false;
@@ -622,7 +622,7 @@
             // 
             this.txt_aggregat2_T1_Filter.BackColor = System.Drawing.SystemColors.ActiveBorder;
             this.txt_aggregat2_T1_Filter.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txt_aggregat2_T1_Filter.Location = new System.Drawing.Point(248, 570);
+            this.txt_aggregat2_T1_Filter.Location = new System.Drawing.Point(287, 570);
             this.txt_aggregat2_T1_Filter.Margin = new System.Windows.Forms.Padding(2);
             this.txt_aggregat2_T1_Filter.Name = "txt_aggregat2_T1_Filter";
             this.txt_aggregat2_T1_Filter.ReadOnly = true;
@@ -634,10 +634,10 @@
             // 
             this.btn_aggregat2_start.BackColor = System.Drawing.Color.Green;
             this.btn_aggregat2_start.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_aggregat2_start.Location = new System.Drawing.Point(57, 617);
+            this.btn_aggregat2_start.Location = new System.Drawing.Point(111, 617);
             this.btn_aggregat2_start.Margin = new System.Windows.Forms.Padding(2);
             this.btn_aggregat2_start.Name = "btn_aggregat2_start";
-            this.btn_aggregat2_start.Size = new System.Drawing.Size(209, 33);
+            this.btn_aggregat2_start.Size = new System.Drawing.Size(161, 33);
             this.btn_aggregat2_start.TabIndex = 48;
             this.btn_aggregat2_start.Text = "Start";
             this.btn_aggregat2_start.UseVisualStyleBackColor = false;
@@ -646,7 +646,7 @@
             // label33
             // 
             this.label33.AutoSize = true;
-            this.label33.Location = new System.Drawing.Point(286, 572);
+            this.label33.Location = new System.Drawing.Point(325, 572);
             this.label33.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label33.Name = "label33";
             this.label33.Size = new System.Drawing.Size(38, 22);
@@ -657,10 +657,10 @@
             // 
             this.btn_aggregat2_Stop.BackColor = System.Drawing.Color.Red;
             this.btn_aggregat2_Stop.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_aggregat2_Stop.Location = new System.Drawing.Point(57, 685);
+            this.btn_aggregat2_Stop.Location = new System.Drawing.Point(111, 685);
             this.btn_aggregat2_Stop.Margin = new System.Windows.Forms.Padding(2);
             this.btn_aggregat2_Stop.Name = "btn_aggregat2_Stop";
-            this.btn_aggregat2_Stop.Size = new System.Drawing.Size(209, 33);
+            this.btn_aggregat2_Stop.Size = new System.Drawing.Size(161, 33);
             this.btn_aggregat2_Stop.TabIndex = 50;
             this.btn_aggregat2_Stop.Text = "Stopp";
             this.btn_aggregat2_Stop.UseVisualStyleBackColor = false;
@@ -681,7 +681,7 @@
             // label38
             // 
             this.label38.AutoSize = true;
-            this.label38.Location = new System.Drawing.Point(164, 547);
+            this.label38.Location = new System.Drawing.Point(188, 547);
             this.label38.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label38.Name = "label38";
             this.label38.Size = new System.Drawing.Size(55, 22);
@@ -693,7 +693,7 @@
             // 
             this.txt_aggregat2_pressure.BackColor = System.Drawing.SystemColors.ActiveBorder;
             this.txt_aggregat2_pressure.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txt_aggregat2_pressure.Location = new System.Drawing.Point(170, 570);
+            this.txt_aggregat2_pressure.Location = new System.Drawing.Point(195, 570);
             this.txt_aggregat2_pressure.Margin = new System.Windows.Forms.Padding(2);
             this.txt_aggregat2_pressure.Name = "txt_aggregat2_pressure";
             this.txt_aggregat2_pressure.ReadOnly = true;
@@ -704,7 +704,7 @@
             // label37
             // 
             this.label37.AutoSize = true;
-            this.label37.Location = new System.Drawing.Point(208, 572);
+            this.label37.Location = new System.Drawing.Point(238, 572);
             this.label37.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label37.Name = "label37";
             this.label37.Size = new System.Drawing.Size(38, 22);
@@ -714,7 +714,7 @@
             // label34
             // 
             this.label34.AutoSize = true;
-            this.label34.Location = new System.Drawing.Point(244, 547);
+            this.label34.Location = new System.Drawing.Point(283, 547);
             this.label34.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label34.Name = "label34";
             this.label34.Size = new System.Drawing.Size(67, 22);
@@ -1264,7 +1264,7 @@
             this.groupBox5.Controls.Add(this.baseUI_pumpAverageFlow);
             this.groupBox5.Controls.Add(this.label40);
             this.groupBox5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox5.Location = new System.Drawing.Point(418, 26);
+            this.groupBox5.Location = new System.Drawing.Point(433, 26);
             this.groupBox5.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Padding = new System.Windows.Forms.Padding(2);
@@ -1302,7 +1302,7 @@
             this.baseUI_pumpAverageFlow.Location = new System.Drawing.Point(4, 23);
             this.baseUI_pumpAverageFlow.Margin = new System.Windows.Forms.Padding(2);
             this.baseUI_pumpAverageFlow.Name = "baseUI_pumpAverageFlow";
-            this.baseUI_pumpAverageFlow.Size = new System.Drawing.Size(388, 233);
+            this.baseUI_pumpAverageFlow.Size = new System.Drawing.Size(388, 373);
             this.baseUI_pumpAverageFlow.TabIndex = 4;
             // 
             // label40

@@ -513,18 +513,28 @@ namespace PumpAutomation
                      //... bitArray is the BitArray instance
                     
                 BitArray _CoilsDataTemp = new BitArray(1024);
-                if (_CoilsData != null)
+                try
                 {
-                    for (int i = 0; i < _CoilsData.Count - 1; i++)
+                    if (_CoilsData != null)
                     {
-                        _CoilsDataTemp[i + 1] = _CoilsData[i];
-
-                        if (i >= 1023)
+                        for (int i = 0; i < _CoilsData.Count - 1; i++)
                         {
-                            break;
+                            _CoilsDataTemp[i + 1] = _CoilsData[i];
+
+                            if (i >= 1023)
+                            {
+                                break;
+                            }
                         }
                     }
                 }
+                catch (Exception)
+                {
+                    
+                    /// error handel here
+                }
+
+
                     _CoilsDataTemp[0] = false; // or true, whatever you want to shift in
                     return _CoilsDataTemp;
             }
