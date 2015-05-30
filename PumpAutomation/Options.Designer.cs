@@ -37,23 +37,12 @@
             this.label39 = new System.Windows.Forms.Label();
             this.tabp_hmi = new System.Windows.Forms.TabPage();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.cb_modbusmode = new System.Windows.Forms.CheckBox();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.tb_plcPort = new System.Windows.Forms.TextBox();
+            this.label34 = new System.Windows.Forms.Label();
+            this.tb_plcip = new System.Windows.Forms.TextBox();
             this.label43 = new System.Windows.Forms.Label();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.cb_databits = new System.Windows.Forms.ComboBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.cb_timeout = new System.Windows.Forms.ComboBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.cb_protocol = new System.Windows.Forms.ComboBox();
-            this.lbl_protocol = new System.Windows.Forms.Label();
-            this.cb_parity = new System.Windows.Forms.ComboBox();
-            this.lbl_parity = new System.Windows.Forms.Label();
-            this.cb_stopbits = new System.Windows.Forms.ComboBox();
-            this.lbl_stopbits = new System.Windows.Forms.Label();
-            this.cb_Baudrate = new System.Windows.Forms.ComboBox();
-            this.lbl_baudrate = new System.Windows.Forms.Label();
-            this.cb_Ports = new System.Windows.Forms.ComboBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.label7 = new System.Windows.Forms.Label();
             this.cb_plc_fast_cycle_delay = new System.Windows.Forms.ComboBox();
@@ -105,16 +94,11 @@
             this.label14 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.tbc_options = new System.Windows.Forms.TabControl();
-            this.cb_modbusmode = new System.Windows.Forms.CheckBox();
-            this.tb_plcip = new System.Windows.Forms.TextBox();
-            this.tb_plcPort = new System.Windows.Forms.TextBox();
-            this.label34 = new System.Windows.Forms.Label();
             this.tabp_rapport.SuspendLayout();
             this.groupBox5.SuspendLayout();
             this.tabp_hmi.SuspendLayout();
             this.groupBox6.SuspendLayout();
             this.groupBox7.SuspendLayout();
-            this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.tabp_process.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -214,13 +198,22 @@
             // 
             this.groupBox6.Controls.Add(this.cb_modbusmode);
             this.groupBox6.Controls.Add(this.groupBox7);
-            this.groupBox6.Controls.Add(this.groupBox1);
             this.groupBox6.Location = new System.Drawing.Point(9, 12);
             this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(436, 295);
+            this.groupBox6.Size = new System.Drawing.Size(241, 295);
             this.groupBox6.TabIndex = 15;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Comminication";
+            // 
+            // cb_modbusmode
+            // 
+            this.cb_modbusmode.AutoSize = true;
+            this.cb_modbusmode.Location = new System.Drawing.Point(18, 29);
+            this.cb_modbusmode.Name = "cb_modbusmode";
+            this.cb_modbusmode.Size = new System.Drawing.Size(88, 17);
+            this.cb_modbusmode.TabIndex = 15;
+            this.cb_modbusmode.Text = "Modbus TCP";
+            this.cb_modbusmode.UseVisualStyleBackColor = true;
             // 
             // groupBox7
             // 
@@ -228,7 +221,7 @@
             this.groupBox7.Controls.Add(this.label34);
             this.groupBox7.Controls.Add(this.tb_plcip);
             this.groupBox7.Controls.Add(this.label43);
-            this.groupBox7.Location = new System.Drawing.Point(216, 61);
+            this.groupBox7.Location = new System.Drawing.Point(18, 51);
             this.groupBox7.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox7.Name = "groupBox7";
             this.groupBox7.Padding = new System.Windows.Forms.Padding(2);
@@ -236,6 +229,29 @@
             this.groupBox7.TabIndex = 14;
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "Ethernet TCP/IP";
+            // 
+            // tb_plcPort
+            // 
+            this.tb_plcPort.Location = new System.Drawing.Point(59, 51);
+            this.tb_plcPort.Name = "tb_plcPort";
+            this.tb_plcPort.Size = new System.Drawing.Size(57, 20);
+            this.tb_plcPort.TabIndex = 5;
+            // 
+            // label34
+            // 
+            this.label34.AutoSize = true;
+            this.label34.Location = new System.Drawing.Point(5, 55);
+            this.label34.Name = "label34";
+            this.label34.Size = new System.Drawing.Size(29, 13);
+            this.label34.TabIndex = 4;
+            this.label34.Text = "Port:";
+            // 
+            // tb_plcip
+            // 
+            this.tb_plcip.Location = new System.Drawing.Point(59, 25);
+            this.tb_plcip.Name = "tb_plcip";
+            this.tb_plcip.Size = new System.Drawing.Size(131, 20);
+            this.tb_plcip.TabIndex = 3;
             // 
             // label43
             // 
@@ -245,150 +261,6 @@
             this.label43.Size = new System.Drawing.Size(48, 13);
             this.label43.TabIndex = 0;
             this.label43.Text = "Address:";
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.cb_databits);
-            this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Controls.Add(this.cb_timeout);
-            this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Controls.Add(this.cb_protocol);
-            this.groupBox1.Controls.Add(this.lbl_protocol);
-            this.groupBox1.Controls.Add(this.cb_parity);
-            this.groupBox1.Controls.Add(this.lbl_parity);
-            this.groupBox1.Controls.Add(this.cb_stopbits);
-            this.groupBox1.Controls.Add(this.lbl_stopbits);
-            this.groupBox1.Controls.Add(this.cb_Baudrate);
-            this.groupBox1.Controls.Add(this.lbl_baudrate);
-            this.groupBox1.Controls.Add(this.cb_Ports);
-            this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Location = new System.Drawing.Point(8, 61);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(2);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(2);
-            this.groupBox1.Size = new System.Drawing.Size(204, 219);
-            this.groupBox1.TabIndex = 0;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "SerialPort";
-            // 
-            // cb_databits
-            // 
-            this.cb_databits.FormattingEnabled = true;
-            this.cb_databits.Location = new System.Drawing.Point(98, 128);
-            this.cb_databits.Name = "cb_databits";
-            this.cb_databits.Size = new System.Drawing.Size(82, 21);
-            this.cb_databits.TabIndex = 13;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(14, 131);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(49, 13);
-            this.label3.TabIndex = 12;
-            this.label3.Text = "Databits:";
-            // 
-            // cb_timeout
-            // 
-            this.cb_timeout.FormattingEnabled = true;
-            this.cb_timeout.Location = new System.Drawing.Point(98, 150);
-            this.cb_timeout.Name = "cb_timeout";
-            this.cb_timeout.Size = new System.Drawing.Size(82, 21);
-            this.cb_timeout.TabIndex = 11;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(14, 154);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(50, 13);
-            this.label2.TabIndex = 10;
-            this.label2.Text = "TimeOut:";
-            // 
-            // cb_protocol
-            // 
-            this.cb_protocol.FormattingEnabled = true;
-            this.cb_protocol.Location = new System.Drawing.Point(98, 176);
-            this.cb_protocol.Name = "cb_protocol";
-            this.cb_protocol.Size = new System.Drawing.Size(82, 21);
-            this.cb_protocol.TabIndex = 9;
-            // 
-            // lbl_protocol
-            // 
-            this.lbl_protocol.AutoSize = true;
-            this.lbl_protocol.Location = new System.Drawing.Point(14, 176);
-            this.lbl_protocol.Name = "lbl_protocol";
-            this.lbl_protocol.Size = new System.Drawing.Size(52, 13);
-            this.lbl_protocol.TabIndex = 8;
-            this.lbl_protocol.Text = "Protocol: ";
-            // 
-            // cb_parity
-            // 
-            this.cb_parity.FormattingEnabled = true;
-            this.cb_parity.Location = new System.Drawing.Point(98, 104);
-            this.cb_parity.Name = "cb_parity";
-            this.cb_parity.Size = new System.Drawing.Size(82, 21);
-            this.cb_parity.TabIndex = 7;
-            // 
-            // lbl_parity
-            // 
-            this.lbl_parity.AutoSize = true;
-            this.lbl_parity.Location = new System.Drawing.Point(14, 107);
-            this.lbl_parity.Name = "lbl_parity";
-            this.lbl_parity.Size = new System.Drawing.Size(36, 13);
-            this.lbl_parity.TabIndex = 6;
-            this.lbl_parity.Text = "Parity:";
-            // 
-            // cb_stopbits
-            // 
-            this.cb_stopbits.FormattingEnabled = true;
-            this.cb_stopbits.Location = new System.Drawing.Point(98, 79);
-            this.cb_stopbits.Name = "cb_stopbits";
-            this.cb_stopbits.Size = new System.Drawing.Size(82, 21);
-            this.cb_stopbits.TabIndex = 5;
-            // 
-            // lbl_stopbits
-            // 
-            this.lbl_stopbits.AutoSize = true;
-            this.lbl_stopbits.Location = new System.Drawing.Point(14, 82);
-            this.lbl_stopbits.Name = "lbl_stopbits";
-            this.lbl_stopbits.Size = new System.Drawing.Size(52, 13);
-            this.lbl_stopbits.TabIndex = 4;
-            this.lbl_stopbits.Text = "Stop Bits:";
-            // 
-            // cb_Baudrate
-            // 
-            this.cb_Baudrate.FormattingEnabled = true;
-            this.cb_Baudrate.Location = new System.Drawing.Point(98, 51);
-            this.cb_Baudrate.Name = "cb_Baudrate";
-            this.cb_Baudrate.Size = new System.Drawing.Size(82, 21);
-            this.cb_Baudrate.TabIndex = 3;
-            // 
-            // lbl_baudrate
-            // 
-            this.lbl_baudrate.AutoSize = true;
-            this.lbl_baudrate.Location = new System.Drawing.Point(14, 54);
-            this.lbl_baudrate.Name = "lbl_baudrate";
-            this.lbl_baudrate.Size = new System.Drawing.Size(53, 13);
-            this.lbl_baudrate.TabIndex = 1;
-            this.lbl_baudrate.Text = "Baudrate:";
-            // 
-            // cb_Ports
-            // 
-            this.cb_Ports.FormattingEnabled = true;
-            this.cb_Ports.Location = new System.Drawing.Point(98, 25);
-            this.cb_Ports.Name = "cb_Ports";
-            this.cb_Ports.Size = new System.Drawing.Size(82, 21);
-            this.cb_Ports.TabIndex = 2;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(14, 28);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(29, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Port:";
             // 
             // groupBox2
             // 
@@ -405,7 +277,7 @@
             this.groupBox2.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Padding = new System.Windows.Forms.Padding(2);
-            this.groupBox2.Size = new System.Drawing.Size(204, 145);
+            this.groupBox2.Size = new System.Drawing.Size(241, 145);
             this.groupBox2.TabIndex = 14;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Time";
@@ -413,7 +285,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(166, 82);
+            this.label7.Location = new System.Drawing.Point(184, 87);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(20, 13);
             this.label7.TabIndex = 9;
@@ -422,7 +294,7 @@
             // cb_plc_fast_cycle_delay
             // 
             this.cb_plc_fast_cycle_delay.FormattingEnabled = true;
-            this.cb_plc_fast_cycle_delay.Location = new System.Drawing.Point(98, 80);
+            this.cb_plc_fast_cycle_delay.Location = new System.Drawing.Point(116, 85);
             this.cb_plc_fast_cycle_delay.Name = "cb_plc_fast_cycle_delay";
             this.cb_plc_fast_cycle_delay.Size = new System.Drawing.Size(64, 21);
             this.cb_plc_fast_cycle_delay.TabIndex = 8;
@@ -430,7 +302,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(5, 82);
+            this.label8.Location = new System.Drawing.Point(23, 87);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(74, 13);
             this.label8.TabIndex = 7;
@@ -439,7 +311,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(166, 54);
+            this.label5.Location = new System.Drawing.Point(184, 59);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(20, 13);
             this.label5.TabIndex = 6;
@@ -448,7 +320,7 @@
             // cb_plc_slow_cycle_delay
             // 
             this.cb_plc_slow_cycle_delay.FormattingEnabled = true;
-            this.cb_plc_slow_cycle_delay.Location = new System.Drawing.Point(98, 52);
+            this.cb_plc_slow_cycle_delay.Location = new System.Drawing.Point(116, 57);
             this.cb_plc_slow_cycle_delay.Name = "cb_plc_slow_cycle_delay";
             this.cb_plc_slow_cycle_delay.Size = new System.Drawing.Size(64, 21);
             this.cb_plc_slow_cycle_delay.TabIndex = 5;
@@ -456,7 +328,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(5, 54);
+            this.label6.Location = new System.Drawing.Point(23, 59);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(77, 13);
             this.label6.TabIndex = 4;
@@ -465,7 +337,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(166, 28);
+            this.label4.Location = new System.Drawing.Point(184, 33);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(20, 13);
             this.label4.TabIndex = 3;
@@ -474,7 +346,7 @@
             // cb_GuiUpdateTime
             // 
             this.cb_GuiUpdateTime.FormattingEnabled = true;
-            this.cb_GuiUpdateTime.Location = new System.Drawing.Point(98, 25);
+            this.cb_GuiUpdateTime.Location = new System.Drawing.Point(116, 30);
             this.cb_GuiUpdateTime.Name = "cb_GuiUpdateTime";
             this.cb_GuiUpdateTime.Size = new System.Drawing.Size(64, 21);
             this.cb_GuiUpdateTime.TabIndex = 2;
@@ -482,7 +354,7 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(5, 28);
+            this.label10.Location = new System.Drawing.Point(23, 33);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(93, 13);
             this.label10.TabIndex = 0;
@@ -922,39 +794,6 @@
             this.tbc_options.Size = new System.Drawing.Size(616, 557);
             this.tbc_options.TabIndex = 15;
             // 
-            // cb_modbusmode
-            // 
-            this.cb_modbusmode.AutoSize = true;
-            this.cb_modbusmode.Location = new System.Drawing.Point(18, 29);
-            this.cb_modbusmode.Name = "cb_modbusmode";
-            this.cb_modbusmode.Size = new System.Drawing.Size(88, 17);
-            this.cb_modbusmode.TabIndex = 15;
-            this.cb_modbusmode.Text = "Modbus TCP";
-            this.cb_modbusmode.UseVisualStyleBackColor = true;
-            // 
-            // tb_plcip
-            // 
-            this.tb_plcip.Location = new System.Drawing.Point(59, 25);
-            this.tb_plcip.Name = "tb_plcip";
-            this.tb_plcip.Size = new System.Drawing.Size(131, 20);
-            this.tb_plcip.TabIndex = 3;
-            // 
-            // tb_plcPort
-            // 
-            this.tb_plcPort.Location = new System.Drawing.Point(59, 51);
-            this.tb_plcPort.Name = "tb_plcPort";
-            this.tb_plcPort.Size = new System.Drawing.Size(57, 20);
-            this.tb_plcPort.TabIndex = 5;
-            // 
-            // label34
-            // 
-            this.label34.AutoSize = true;
-            this.label34.Location = new System.Drawing.Point(5, 55);
-            this.label34.Name = "label34";
-            this.label34.Size = new System.Drawing.Size(29, 13);
-            this.label34.TabIndex = 4;
-            this.label34.Text = "Port:";
-            // 
             // Options
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -976,8 +815,6 @@
             this.groupBox6.PerformLayout();
             this.groupBox7.ResumeLayout(false);
             this.groupBox7.PerformLayout();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.tabp_process.ResumeLayout(false);
@@ -1005,21 +842,6 @@
         private System.Windows.Forms.GroupBox groupBox6;
         private System.Windows.Forms.GroupBox groupBox7;
         private System.Windows.Forms.Label label43;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.ComboBox cb_databits;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.ComboBox cb_timeout;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.ComboBox cb_protocol;
-        private System.Windows.Forms.Label lbl_protocol;
-        private System.Windows.Forms.ComboBox cb_parity;
-        private System.Windows.Forms.Label lbl_parity;
-        private System.Windows.Forms.ComboBox cb_stopbits;
-        private System.Windows.Forms.Label lbl_stopbits;
-        private System.Windows.Forms.ComboBox cb_Baudrate;
-        private System.Windows.Forms.Label lbl_baudrate;
-        private System.Windows.Forms.ComboBox cb_Ports;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.ComboBox cb_plc_fast_cycle_delay;

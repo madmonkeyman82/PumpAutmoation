@@ -19,7 +19,7 @@ namespace PumpAutomation
             InitializeComponent();
             this.Activated += Options_Activated;
             hidden = false;
-            
+            Loadsettings();
         }
 
         #region  Public`s
